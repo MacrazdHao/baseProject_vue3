@@ -1,0 +1,45 @@
+@font-face {
+  font-family: 'MyriadSetPro-Semibold';
+  src: url(../assets/font/MyriadSetPro-Semibold.ttf);
+}
+
+@font-face {
+  font-family: 'FrutigerCE-Bold';
+  src: url(../assets/font/Frutiger-CE-65-Bold.ttf);
+}
+
+@font-face {
+  font-family: 'arial';
+  src: url(../assets/font/arial.ttf);
+}
+
+@font-face {
+  font-family: 'arialbd';
+  src: url(../assets/font/arialbd.ttf);
+}
+
+@font-face {
+  font-family: 'OPPOSans-B';
+  src: url(../assets/font/OPPOSans-B.ttf);
+}
+
+@font-face {
+  font-family: "AlibabaPuHuiTiR";
+  src: url(../assets/font/Alibaba-PuHuiTi-Regular.ttf);
+}
+
+@font-face {
+  font-family: "AlibabaPuHuiTiM";
+  src: url(../assets/font/Alibaba-PuHuiTi-Medium.ttf);
+}
+
+
+@font-face {
+  font-family: "Roboto-Regular";
+  src: url(../assets/font/Roboto-Regular.ttf);
+}
+
+@font-face {
+  font-family: "Roboto-Medium";
+  src: url(../assets/font/Roboto-Medium.ttf);
+}

@@ -1,0 +1,21 @@
+* {
+  font-family: RegularFont;
+}
+
+html {
+  --fontSize_Regular_regular: 14px;
+  --fontSize_Regular_medium: 16px;
+  --fontSize_Regular_big: 18px;
+  --fontSize_Medium_regular: 16px;
+  --fontSize_Medium_medium: 18px;
+}
+
+.font--Medium {
+  font-family: MediumFont;
+}
+
+// .el-table th .cell {
+//   // font-size: $fontSize_regular !important;
+//   font-weight: normal !important;
+//   font-family: MediumFont !important;
+// }

@@ -1,0 +1,9 @@
+@font-face {
+  font-family: "RegularFont";
+  src: url(../assets/font/Alibaba-PuHuiTi-Regular.ttf);
+}
+
+@font-face {
+  font-family: "MediumFont";
+  src: url(../assets/font/Alibaba-PuHuiTi-Medium.ttf);
+}
