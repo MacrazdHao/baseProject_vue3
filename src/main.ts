@@ -4,9 +4,10 @@ import App from "./App.vue";
 import router from "./router/index";
 import { createPinia } from "pinia";
 
-import { getLocale } from "@/lang/index";
+import { getLocale, i18n } from "@/lang/index";
 import "@/styles/globalStyle.scss";
 import "@/styles/transitions.css";
+
 const lang = getLocale();
 let langGlobalStyle =
   lang === "zh"
@@ -32,5 +33,5 @@ setTimeout(() => {
 });
 
 let app = createApp(App);
-app.use(router).use(createPinia()).mount("#app");
+app.use(router).use(i18n).use(createPinia()).mount("#app");
 app.config.globalProperties.test = 123;

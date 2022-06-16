@@ -2,9 +2,11 @@
 import { getCurrentInstance, getCurrentScope, ref } from "vue";
 import { storeToRefs } from "pinia";
 import modules from "@/store/index";
+import { useI18n } from "vue-i18n";
 const { proxy } = getCurrentInstance();
 const counterStore = modules.counter();
 const { count } = storeToRefs(counterStore);
+console.log(useI18n())
 const onclick = () => {
   counterStore.increment();
 };
