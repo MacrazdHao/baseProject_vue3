@@ -1,10 +1,13 @@
 <script setup lang="ts">
+import { ref } from "vue";
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
+const ver = ref(process.env.version);
 </script>
 
 <template>
   <router-view></router-view>
+  <p style="display: none">{{ ver }}</p>
 </template>
 
 <style>

@@ -4,11 +4,21 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
+    "dev:development": "vite --mode development",
+    "dev:test": "vite --mode test",
+    "dev:uat": "vite --mode uat",
+    "dev:production": "vite --mode production",
     "build": "vue-tsc --noEmit && vite build",
+    "build:development": "vue-tsc --noEmit && vite build --mode development",
+    "build:test": "vue-tsc --noEmit && vite build --mode test",
+    "build:uat": "vue-tsc --noEmit && vite build --mode uat",
+    "build:production": "vue-tsc --noEmit && vite build --mode production",
     "preview": "vite preview"
   },
   "dependencies": {
+    "dotenv": "^16.0.1",
     "js-cookie": "^3.0.1",
+    "moment": "^2.29.3",
     "pinia": "^2.0.14",
     "vue": "^3.2.25",
     "vue-i18n": "^9.2.0-beta.36",
@@ -16,6 +26,7 @@
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.2",
+    "@types/moment": "^2.13.0",
     "@types/node": "^17.0.43",
     "@types/webpack-env": "^1.17.0",
     "@vitejs/plugin-vue": "^2.3.3",

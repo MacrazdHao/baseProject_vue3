@@ -1,4 +1,4 @@
-const StaticKeyPrefix = "VeminarMini";
+const StaticKeyPrefix = "Demo";
 const SuffixMenuParams = StaticKeyPrefix + "SuffixMenuParams";
 const MenuShowCookiesKey = StaticKeyPrefix + "PsychicMenuStatus";
 const LanguageKey = StaticKeyPrefix + "languagekey";

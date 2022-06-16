@@ -31,4 +31,6 @@ setTimeout(() => {
   }
 });
 
-createApp(App).use(router).use(createPinia()).mount("#app");
+let app = createApp(App);
+app.use(router).use(createPinia()).mount("#app");
+app.config.globalProperties.test = 123;

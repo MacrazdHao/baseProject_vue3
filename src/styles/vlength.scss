@@ -1,3 +1,5 @@
+@use "sass:math";
+
 $base_width: 1440;
 $base_height: 900;
 $base_fontSizeNum: 14;
@@ -5,11 +7,11 @@ $base_fontSize_640p: 12px;
 $base_fontSize_1440p: 14px;
 $base_fontSize_1920p: 16px;
 @function vw($px) {
-  @return ($px / $base_width) * 100vw;
+  @return math.div($px, $base_width) * 100vw;
 }
 @function vh($px) {
-  @return ($px / $base_height) * 100vh;
+  @return math.div($px, $base_height) * 100vh;
 }
 @function rem($px) {
-  @return ($px / $base_fontSizeNum) * 1rem;
+  @return math.div($px, $base_fontSizeNum) * 1rem;
 }

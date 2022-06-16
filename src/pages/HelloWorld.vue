@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { getCurrentInstance, getCurrentScope, ref } from "vue";
 import { storeToRefs } from "pinia";
 import modules from "@/store/index";
-
+const { proxy } = getCurrentInstance();
 const counterStore = modules.counter();
 const { count } = storeToRefs(counterStore);
 const onclick = () => {
