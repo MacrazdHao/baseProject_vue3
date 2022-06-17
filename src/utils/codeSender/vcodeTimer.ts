@@ -6,7 +6,7 @@
 
 // import Vue from 'vue'
 import store from "../../store";
-// import i18n from "@/lang";
+// import {i18n} from "@/lang";
 
 const secondsCount = 60;
 const phoneVCodeTimestamp = "pvcode";

@@ -1,6 +1,6 @@
 // import Vue from 'vue'
 import store from "@/store";
-// import i18n from '@/lang'
+// import {i18n} from '@/lang'
 
 let secondsCount = 60;
 const EmailVCodeTimestampKey = "evcode";

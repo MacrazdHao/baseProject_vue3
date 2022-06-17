@@ -1,6 +1,6 @@
 // import Vue from 'vue'
 import store from "@/store";
-// import i18n from '../language'
+// import {i18n} from '../language'
 
 let secondsCount = 60;
 const PhoneVCodeTimestampKey = "pvcode";

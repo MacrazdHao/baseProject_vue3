@@ -8,6 +8,8 @@ import { getLocale, i18n } from "@/lang/index";
 import "@/styles/globalStyle.scss";
 import "@/styles/transitions.css";
 
+console.log(i18n)
+
 const lang = getLocale();
 let langGlobalStyle =
   lang === "zh"
