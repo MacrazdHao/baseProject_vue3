@@ -1,10 +1,10 @@
-import axios from "axios";
+// import axios from "axios";
+import Axios from "./Axios";
 import { getToken, removeToken } from "./auth";
 import config from "./config";
 import { i18n } from "@/lang";
 
-console.log(config);
-const service = axios.create({
+const service = Axios.create({
   // baseURL: mockURL, // url = base url + request url
   baseURL: config.URL,
   timeout: 50000, // request timeout
@@ -41,11 +41,12 @@ service.interceptors.response.use(
       // Vue.prototype.$message.error({ text: i18n.t("tips.loginExpire") });
       removeToken();
     }
-
     if (!res.success) {
       // Vue.prototype.$message.error({text: res[i18n.t('tips.msgKey')] || 'Error'})
-      const { t } = i18n.global;
-      return Promise.reject(new Error(res[t("tips.msgKey")] || "Error"));
+      // const { t } = i18n.global;
+      return Promise.reject(
+        new Error(res[i18n.global.t("tips.msgKey")] || "Error")
+      );
     } else {
       return res;
     }
@@ -63,10 +64,6 @@ service.interceptors.response.use(
   }
 );
 
-interface ObjectMapType {
-  [key: string]: any | Function;
-}
-
-(<ObjectMapType>service).custom = { url: config.URL, ossUrl: config.ossURL };
+service.custom = { url: config.URL, ossUrl: config.ossURL };
 
 export default service;

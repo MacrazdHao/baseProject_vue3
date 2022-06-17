@@ -2,7 +2,7 @@ import config from "./config";
 // import Vue from "vue";
 
 interface ObjectMapType {
-  [key: string]: any | Function;
+  [key: string]: any | ObjectMapType | Function;
 }
 
 let webSocketMap: ObjectMapType = {};

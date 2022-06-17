@@ -13,7 +13,7 @@ let langGlobalStyle =
   lang === "zh"
     ? "./styles/globalStyle_cn.scss"
     : "./styles/globalStyle_en.scss";
-import(/* @vite-ignore */ langGlobalStyle).then(() => {
+import(langGlobalStyle).then(() => {
   console.log("加载全局语言样式完成");
 });
 
