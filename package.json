@@ -16,10 +16,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@types/nprogress": "^0.2.0",
     "axios": "^0.27.2",
     "dotenv": "^16.0.1",
     "js-cookie": "^3.0.1",
     "moment": "^2.29.3",
+    "nprogress": "^0.2.0",
     "pinia": "^2.0.14",
     "vue": "^3.2.25",
     "vue-i18n": "^9.2.0-beta.36",
