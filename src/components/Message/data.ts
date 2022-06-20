@@ -7,7 +7,7 @@ interface MessageType {
 const messages = ref<Array<any>>([]);
 
 export const getDataRefs = () => {
-  return messages;
+  return { messages };
 };
 
 export const pushMsg = (msg: MessageType) => {

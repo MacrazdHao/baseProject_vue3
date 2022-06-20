@@ -2,7 +2,7 @@
 <script setup lang="ts">
 import { getDataRefs } from "./data";
 import message from "./message.vue";
-const messages = getDataRefs();
+const { messages } = getDataRefs();
 </script>
 
 <template>

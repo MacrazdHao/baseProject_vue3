@@ -12,6 +12,7 @@ const onclick = () => {
 };
 const login = () => {
   proxy.$message.error({ text: "123123" });
+  proxy.$loading.show();
 };
 </script>
 

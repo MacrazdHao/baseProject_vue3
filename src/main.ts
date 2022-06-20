@@ -8,6 +8,7 @@ import { getLocale, i18n } from "@/lang/index";
 import "@/styles/globalStyle.scss";
 import "@/styles/transitions.css";
 import { MessagePlugin } from "@/components/Message/index";
+import { LoadingPlugin } from "@/components/Loading/index";
 
 console.log(i18n);
 
@@ -37,5 +38,5 @@ setTimeout(() => {
 
 let app = createApp(App);
 app.use(router).use(i18n).use(createPinia()).mount("#app");
-app.use(MessagePlugin);
+app.use(MessagePlugin).use(LoadingPlugin);
 app.config.globalProperties.test = 123;

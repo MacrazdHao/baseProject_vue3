@@ -1,4 +1,4 @@
-import { App, createApp, ref, reactive, toRef, toRefs } from "vue";
+import { createApp } from "vue";
 import { pushMsg } from "./data";
 import MessageList from "./index.vue";
 import Lodash from "lodash";

@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import { getToken } from "@/utils/request/auth";
+import { toggle } from "@/components/Loading/data";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -22,5 +23,7 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 });
-
+router.beforeEach((to, from) => {
+  toggle(false);
+});
 export default router;
