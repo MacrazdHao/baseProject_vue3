@@ -7,15 +7,16 @@ import { createPinia } from "pinia";
 import { getLocale, i18n } from "@/lang/index";
 import "@/styles/globalStyle.scss";
 import "@/styles/transitions.css";
+import { MessagePlugin } from "@/components/Message/index";
 
-console.log(i18n)
+console.log(i18n);
 
 const lang = getLocale();
 let langGlobalStyle =
   lang === "zh"
     ? "./styles/globalStyle_cn.scss"
     : "./styles/globalStyle_en.scss";
-import(langGlobalStyle).then(() => {
+import(/* @vite-ignore */ langGlobalStyle).then(() => {
   console.log("加载全局语言样式完成");
 });
 
@@ -36,4 +37,5 @@ setTimeout(() => {
 
 let app = createApp(App);
 app.use(router).use(i18n).use(createPinia()).mount("#app");
+app.use(MessagePlugin);
 app.config.globalProperties.test = 123;

@@ -12,7 +12,6 @@ const onclick = () => {
 
 <template>
   <div class="Index">
-    <p>123123123123</p>
     <router-view></router-view>
   </div>
 </template>
