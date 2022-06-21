@@ -199,6 +199,7 @@ const jumpTo = (route: RouteRecordRaw) => {
             cursor: pointer;
             .avatar {
               width: 20px;
+              border-radius: 20px;
             }
             .nickname {
               @include ellipsis(120px);
