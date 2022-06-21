@@ -104,8 +104,7 @@ export default {
 <style lang="scss" scoped>
 .Dialog {
   @include flex(row, flex-end);
-  width: 100%;
-  height: 100%;
+  @include fullSize();
   background-color: getThemeRgba($backgroundColor_M8, 0.5);
   position: fixed;
   left: 0;
@@ -120,7 +119,6 @@ export default {
     width: 600px;
     min-height: 280px;
     padding: 20px 20px 30px 20px;
-    box-sizing: border-box;
     // margin-top: calc(100vh / 3);
     .header {
       @include flex(row, flex-end);

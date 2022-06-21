@@ -30,6 +30,31 @@ const routes: Array<RouteRecordRaw> = [
         path: "dashboard",
         name: "Dashboard",
         component: () => import("@/pages/Dashboard/index.vue"),
+        meta: {
+          titleKey: "dashboard",
+        },
+      },
+      {
+        path: "machinesManagement",
+        name: "MachinesManagement",
+        component: () => import("@/pages/MachinesList/index.vue"),
+        meta: {
+          titleKey: "machinesManagement",
+        },
+        children: [
+          {
+            path: "/",
+            redirect: "/index/machinesManagement/machinesList",
+          },
+          {
+            path: "machinesList",
+            name: "MachinesList",
+            component: () => import("@/pages/MachinesList/pages/list.vue"),
+            meta: {
+              titleKey: "machinesList",
+            },
+          },
+        ],
       },
     ],
   },

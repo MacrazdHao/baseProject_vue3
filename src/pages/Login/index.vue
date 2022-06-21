@@ -5,8 +5,8 @@ import modules from "@/store/index";
 import songButton from "@/components/common/songButton.vue";
 import { setToken, tokenRef } from "@/utils/request/auth";
 
-const { proxy } = getCurrentInstance();
-console.log(proxy.test);
+// const { proxy } = getCurrentInstance();
+// console.log(proxy.test);
 const counterStore = modules.counter();
 const { count } = storeToRefs(counterStore);
 const onclick = () => {
@@ -78,7 +78,6 @@ const login = () => {
       text-align: center;
       padding: 8px 12px;
       width: 100%;
-      box-sizing: border-box;
       // border: 2px solid getThemeRgba($borderColor_M2, 0.2);
       background-color: $buttonColor_Black;
       backdrop-filter: blur(10px);

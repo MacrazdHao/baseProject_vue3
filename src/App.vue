@@ -29,8 +29,7 @@ watch(tokenRef, () => {
 <style lang="scss">
 #app {
   @include flex(row, flex-end);
-  height: 100%;
-  width: 100%;
+  @include fullSize();
   background-image: radial-gradient(
     circle,
     $backgroundColor_M7,
@@ -44,23 +43,22 @@ watch(tokenRef, () => {
     margin-right: 24px;
   }
   .shadowBox--afterLogin {
-    width: calc(100% - 48px);
-    margin: 0 24px;
+    width: calc(100% - 64px);
+    margin: 0 32px;
   }
   .shadowBox {
     @include flex();
     backdrop-filter: blur(1px);
     box-shadow: 0 0 10px 0 $shadowColor_Gray1;
     background-color: getThemeRgba($backgroundColor_M8, 0.8);
-    height: calc(100% - 24px);
+    height: calc(100% - 36px);
     border-radius: 4px;
     transition: 0.6s all;
     position: relative;
     overflow: auto;
     .page {
       @include flex();
-      width: 100%;
-      height: 100%;
+      @include fullSize();
     }
   }
 }

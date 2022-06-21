@@ -52,7 +52,6 @@ const props = defineProps({
 <style lang="scss" scoped>
 .Button {
   @include flex();
-  box-sizing: border-box;
   padding: 7px 30px;
   border-radius: 2px;
   transition: all 0.2s;
