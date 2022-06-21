@@ -14,7 +14,7 @@ const { visible, tips } = getDataRefs();
 
 <style lang="scss" scoped>
 .Loading {
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: getThemeRgba($themeColor_Black, 0.8);
   width: 100%;
   height: 100%;
   position: fixed;
@@ -39,7 +39,7 @@ const { visible, tips } = getDataRefs();
     }
   }
   p {
-    margin: 0;
+    @include noMarginPadding();
     color: $fontColor_M1;
   }
 }

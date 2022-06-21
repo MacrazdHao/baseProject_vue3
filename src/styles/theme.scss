@@ -6,14 +6,21 @@ $activeOpactiy: 0.9;
   @return rgba($hex_color, $hoverOpactiy);
 }
 @function getHover($hex_color) {
-  @return rgba($hex_color, $hoverOpactiy);
+  @return rgba(red($hex_color) + 5, green($hex_color) + 5, blue($hex_color) + 5, $hoverOpactiy);
 }
 @function getActive($hex_color) {
-  @return rgba($hex_color, $activeOpactiy);
+  @return rgba(red($hex_color)-10, green($hex_color)-10, blue($hex_color)-10, $hoverOpactiy);
+}
+@function getThemeRgba($hex_color, $opacity) {
+  @return rgba($hex_color, $opacity);
+}
+@mixin messageShadow($hex_color) {
+  box-shadow: 0px 4px 16px 0px getThemeRgba($hex_color, 0.4);
 }
 
 // 主题颜色
 $themeColor_Black: #333333;
+$themeColor_White: #ffffff;
 $themeColor_Dark: #708090;
 $themeColor_Blue: #4169e1;
 $themeColor_GreenBlue: #008b8b;
@@ -44,6 +51,9 @@ $commonGray17: #fafafa;
 $commonGray18: #ffffff;
 
 // 给主题颜色赋予用途/含义
+$buttonColor_White: getNormal($themeColor_White);
+$buttonColor_White_hover: getHover($themeColor_White);
+$buttonColor_White_active: getActive($themeColor_White);
 $buttonColor_Black: getNormal($themeColor_Black);
 $buttonColor_Black_hover: getHover($themeColor_Black);
 $buttonColor_Black_active: getActive($themeColor_Black);

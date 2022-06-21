@@ -69,28 +69,28 @@ watchEffect(() => {
   transition: all 0.2s ease;
   // z-index: 2000;
   p {
-    margin: 0;
+    @include userSelect();
+    @include noMarginPadding();
     font-size: var(--fontSize_Regular_regular);
     color: $fontColor_M8;
     line-height: 20px;
     text-align: center;
-    user-select: none;
   }
 }
 .blue {
+  @include messageShadow($functionColor_Message);
   background-color: $functionColor_Message;
-  box-shadow: 0px 4px 16px 0px rgba(56, 100, 225, 0.4);
 }
 .green {
+  @include messageShadow($functionColor_Success);
   background-color: $functionColor_Success;
-  box-shadow: 0px 4px 16px 0px rgba(94, 197, 28, 0.4);
 }
 .yellow {
+  @include messageShadow($functionColor_Warning);
   background: $functionColor_Warning;
-  box-shadow: 0px 4px 16px 0px rgba(242, 189, 59, 0.4);
 }
 .red {
+  @include messageShadow($functionColor_Error);
   background-color: $functionColor_Error;
-  box-shadow: 0px 4px 16px 0px rgba(232, 83, 76, 0.4);
 }
 </style>

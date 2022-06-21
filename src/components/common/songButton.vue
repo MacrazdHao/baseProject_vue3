@@ -54,7 +54,7 @@ const props = defineProps({
   box-sizing: border-box;
   padding: 7px 30px;
   border-radius: 2px;
-  transition: all 0.1s;
+  transition: all 0.2s;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -64,28 +64,27 @@ const props = defineProps({
     width: 12px;
   }
   p {
-    margin: 0;
-    padding: 0;
-    user-select: none;
+    @include userSelect();
+    @include noMarginPadding();
     white-space: nowrap;
   }
 }
 .disable {
-  border: 1px solid $borderColor_M3;
-  background-color: $backgroundColor_M2;
-  color: $fontColor_M8;
+  border: 1px solid $buttonColor_Dark;
+  background-color: $buttonColor_Dark;
+  color: $commonGray18;
 }
 
 .white {
-  border: 1px solid $borderColor_M6;
-  background-color: $backgroundColor_M7;
+  border: 1px solid $buttonColor_White;
+  background-color: $buttonColor_White;
   color: $fontColor_M1;
 }
 .white:hover {
-  background-color: rgb(250, 250, 250);
+  background-color: $buttonColor_White_hover;
 }
 .white:active {
-  background-color: rgb(240, 240, 240);
+  background-color: buttonColor_White_active;
 }
 
 .theme {

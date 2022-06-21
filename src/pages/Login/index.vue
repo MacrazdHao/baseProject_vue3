@@ -144,8 +144,8 @@ const login = () => {
         cursor: pointer;
         transition: 0.2s all;
         p {
+          @include userSelect();
           color: #fff;
-          user-select: none;
           transition: 0.2s all;
         }
       }
