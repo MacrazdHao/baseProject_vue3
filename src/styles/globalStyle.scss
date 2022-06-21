@@ -65,13 +65,13 @@ img {
 *::-webkit-scrollbar-thumb {
   /*滚动条里面小方块*/
   border-radius: 10px;
-  background: $commonColor_Gray6;
+  background: $backgroundColor_M1;
 }
 
 *::-webkit-scrollbar-track {
   /*滚动条里面轨道*/
   border-radius: 10px;
-  background: $commonColor_Gray5;
+  background: $backgroundColor_M3;
 }
 
 input {
@@ -83,13 +83,13 @@ input {
 }
 
 input::-webkit-input-placeholder {
-  color: $commonColor_Gray1;
+  color: $fontColor_M3;
 }
 
 input::-moz-placeholder {
-  color: $commonColor_Gray1;
+  color: $fontColor_M3;
 }
 
 input:-ms-input-placeholder {
-  color: $commonColor_Gray1;
+  color: $fontColor_M3;
 }

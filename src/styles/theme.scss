@@ -1,61 +1,110 @@
-$themeColor: #ffb706;
-$themeColor2: #ffb706;
-$themeColor3: #ffe7ab;
-$themeColor4: #fff7e5;
-$themeColor5: #fefbf2;
-$themeColor6: #ffd05d;
-$themeColor7: #ffe6a9;
+// 提高可读性的变量及函数
+$normalOpactiy: 1;
+$hoverOpactiy: 0.95;
+$activeOpactiy: 0.9;
+@function getNormal($hex_color) {
+  @return rgba($hex_color, $hoverOpactiy);
+}
+@function getHover($hex_color) {
+  @return rgba($hex_color, $hoverOpactiy);
+}
+@function getActive($hex_color) {
+  @return rgba($hex_color, $activeOpactiy);
+}
 
-$fontColor_M1: #333333;
-$fontColor_M2: #666666;
-$fontColor_M3: #999999;
-$fontColor_M4: #b7b7b7;
-$fontColor_M5: #c7c7c7;
-$fontColor_M6: #d3d3d3;
-$fontColor_M7: #d8d8d8;
+// 主题颜色
+$themeColor_Black: #333333;
+$themeColor_Dark: #708090;
+$themeColor_Blue: #4169e1;
+$themeColor_GreenBlue: #008b8b;
+$themeColor_Green: #228b22;
+$themeColor_Purple: #9932cc;
+$themeColor_Pink: #c71585;
+$themeColor_Red: #b22222;
+$themeColor_Orange: #d2691e;
+$themeColor_Yellow: #daa520;
+// 主题灰调
+$commonGray1: #000000;
+$commonGray2: #333333;
+$commonGray3: #666666;
+$commonGray4: #7d7d7d;
+$commonGray5: #999999;
+$commonGray6: #b7b7b7;
+$commonGray7: #c7c7c7;
+$commonGray8: #d3d3d3;
+$commonGray9: #d8d8d8;
+$commonGray10: #d9d9d9;
+$commonGray11: #dddfe6;
+$commonGray12: #e0e0e0;
+$commonGray13: #eaeaeb;
+$commonGray14: #f0f0f0;
+$commonGray15: #f1f2f6;
+$commonGray16: #f8f8f8;
+$commonGray17: #fafafa;
+$commonGray18: #ffffff;
 
-$borderColor_M1: #d9d9d9;
-$borderColor_M2: #d3d3d3;
-$borderColor_M3: #333333;
-$borderColor_M4: #666666;
-$borderColor_M5: #999999;
-$borderColor_M6: #dddfe6;
+// 给主题颜色赋予用途/含义
+$buttonColor_Black: getNormal($themeColor_Black);
+$buttonColor_Black_hover: getHover($themeColor_Black);
+$buttonColor_Black_active: getActive($themeColor_Black);
+$buttonColor_Red: getNormal($themeColor_Red);
+$buttonColor_Red_hover: getHover($themeColor_Red);
+$buttonColor_Red_active: getActive($themeColor_Red);
+$buttonColor_Green: getNormal($themeColor_Green);
+$buttonColor_Green_hover: getHover($themeColor_Green);
+$buttonColor_Green_active: getActive($themeColor_Green);
+$buttonColor_Blue: getNormal($themeColor_Blue);
+$buttonColor_Blue_hover: getHover($themeColor_Blue);
+$buttonColor_Blue_active: getActive($themeColor_Blue);
+$buttonColor_GreenBlue: getNormal($themeColor_GreenBlue);
+$buttonColor_GreenBlue_hover: getHover($themeColor_GreenBlue);
+$buttonColor_GreenBlue_active: getActive($themeColor_GreenBlue);
+$buttonColor_Purple: getNormal($themeColor_Purple);
+$buttonColor_Purple_hover: getHover($themeColor_Purple);
+$buttonColor_Purple_active: getActive($themeColor_Purple);
+$buttonColor_Pink: getNormal($themeColor_Pink);
+$buttonColor_Pink_hover: getHover($themeColor_Pink);
+$buttonColor_Pink_active: getActive($themeColor_Pink);
+$buttonColor_Dark: getNormal($themeColor_Dark);
+$buttonColor_Dark_hover: getHover($themeColor_Dark);
+$buttonColor_Dark_active: getActive($themeColor_Dark);
+$buttonColor_Yellow: getNormal($themeColor_Yellow);
+$buttonColor_Yellow_hover: getHover($themeColor_Yellow);
+$buttonColor_Yellow_active: getActive($themeColor_Yellow);
+$buttonColor_Orange: getNormal($themeColor_Orange);
+$buttonColor_Orange_hover: getHover($themeColor_Orange);
+$buttonColor_Orange_active: getActive($themeColor_Orange);
 
-$backgroundColor_M1: #f1f2f6;
-$backgroundColor_M2: #fafafa;
-$backgroundColor_M3: #999999;
-$backgroundColor_M4: #f8f8f8;
+$fontColor_M1: $commonGray2;
+$fontColor_M2: $commonGray3;
+$fontColor_M3: $commonGray5;
+$fontColor_M4: $commonGray6;
+$fontColor_M5: $commonGray7;
+$fontColor_M6: $commonGray8;
+$fontColor_M7: $commonGray9;
+$fontColor_M8: $commonGray18;
 
-$commonColor_white: #ffffff;
-$commonColor_black: #000000;
-$commonColor_Orange1: #ffa200;
-$commonColor_Orange2: #ffb706;
-$commonColor_Orange3: #ffe7ab;
-$commonColor_Orange4: #fff7e5;
-$commonColor_Orange5: #fefbf2;
-$commonColor_Orange6: #FFC132;
-$commonColor_Orange7: #FFD679;
+$borderColor_M1: $commonGray2;
+$borderColor_M2: $commonGray3;
+$borderColor_M3: $commonGray5;
+$borderColor_M4: $commonGray8;
+$borderColor_M5: $commonGray11;
+$borderColor_M6: $commonGray10;
+$borderColor_M7: $commonGray18;
 
-$commonColor_Blue1: #4b78f6;
-$commonColor_Blue2: #eff6ff;
-$commonColor_Blue3: #f1f4ff;
-$commonColor_Blue4: #013047;
-$commonColor_Blue5: #4b77f6;
-$commonColor_Gray1: #999999;
-$commonColor_Gray2: #bababa;
-$commonColor_Gray3: #d9d9d9;
-$commonColor_Gray4: #f5f5f5;
-$commonColor_Gray5: #f0f0f0;
-$commonColor_Gray6: #7d7d7d;
-$commonColor_Gray7: #272735;
-$commonColor_Gray8: #d3d3d3;
-$commonColor_Gray9: #e6e6e6;
+$backgroundColor_M1: $commonGray4;
+$backgroundColor_M2: $commonGray5;
+$backgroundColor_M3: $commonGray14;
+$backgroundColor_M4: $commonGray15;
+$backgroundColor_M5: $commonGray16;
+$backgroundColor_M6: $commonGray17;
+$backgroundColor_M7: $commonGray18;
 
-$shadowColor_Gray1: #e0e0e0;
-$shadowColor_Gray2: #eaeaeb;
+$shadowColor_Gray1: $commonGray1;
+$shadowColor_Gray2: $commonGray12;
+$shadowColor_Gray3: $commonGray13;
 
-$functionColor_Message: #4b77f6;
-$functionColor_Success: #53c41b;
-$functionColor_Warning: #ffbe3d;
-$functionColor_Error: #fd564f;
-$functionColor_Error2: #ff4d50;
+$functionColor_Message: $themeColor_Blue;
+$functionColor_Success: $themeColor_Green;
+$functionColor_Warning: $themeColor_Orange;
+$functionColor_Error: $themeColor_Red;

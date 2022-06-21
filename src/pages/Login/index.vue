@@ -2,6 +2,7 @@
 import { getCurrentInstance, ref } from "vue";
 import { storeToRefs } from "pinia";
 import modules from "@/store/index";
+import songButton from "@/components/common/songButton.vue";
 
 const { proxy } = getCurrentInstance();
 console.log(proxy.test);
@@ -18,9 +19,19 @@ const login = () => {
 
 <template>
   <div class="Login">
+    <songButton text="ceshi"></songButton>
+    <songButton text="ceshi" theme="red"></songButton>
+    <songButton text="ceshi" theme="green"></songButton>
+    <songButton text="ceshi" theme="blue"></songButton>
+    <songButton text="ceshi" theme="greenblue"></songButton>
+    <songButton text="ceshi" theme="purple"></songButton>
+    <songButton text="ceshi" theme="pink"></songButton>
+    <songButton text="ceshi" theme="dark"></songButton>
+    <songButton text="ceshi" theme="yellow"></songButton>
+    <songButton text="ceshi" theme="orange"></songButton>
     <div class="shadowBox">
       <div class="loginBox">
-        <img class="logo" src="@/assets/logo.png" />
+        <img class="logo" src="@/assets/logo.svg" />
         <div class="form">
           <div class="form-item">
             <input class="form-item-input" placeholder="请输入帐号" />
@@ -42,25 +53,47 @@ const login = () => {
 </template>
 
 <style lang="scss" scoped>
+@-webkit-keyframes bganim {
+}
 .Login {
   @include flex(row, flex-end);
   height: 100%;
   width: 100%;
   // background: url("@/assets/logo.png");
-  background-image: linear-gradient(
-      0deg,
-      rgba(0, 0, 0, 0.5) 50%,
-      transparent 50%
-    ),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.5) 50%, transparent 50%);
-  background-size: 40px 40px;
+  // background-image: linear-gradient(
+  //     0deg,
+  //     rgba(0, 0, 0, 0.5) 50%,
+  //     transparent 50%
+  //   ),
+  //   linear-gradient(90deg, rgba(0, 0, 0, 0.5) 50%, transparent 50%);
+  // background-image: radial-gradient(
+  //   circle,
+  //   #333333,
+  //   #606060,
+  //   #929292,
+  //   #c7c7c7,
+  //   #ffffff
+  // );
+  background-image: radial-gradient(
+    circle,
+    #ffffff,
+    #c7c7c7,
+    #929292,
+    #606060,
+    #333333
+  );
+  // background-image: linear-gradient(to right top, #333333, #606060, #929292, #c7c7c7, #ffffff);
+  // background-size: 80px 80px;
+  animation: bganim 1s linear infinite;
   .shadowBox {
     @include flex;
     backdrop-filter: blur(1px);
-    box-shadow: 0 0 10px 0 $commonColor_black;
+    box-shadow: 0 0 10px 0 $shadowColor_Gray1;
     background-color: rgba(0, 0, 0, 0.8);
+    // background-image: linear-gradient(to left, #33333332, #60606032, #92929232, #c7c7c732, #ffffff32);
     height: calc(100% - 24px);
     width: calc(50% - 24px);
+    max-width: 600px;
     margin-right: 24px;
     border-radius: 4px;
     .loginBox {
@@ -73,6 +106,7 @@ const login = () => {
       .logo {
         width: 80px;
         height: 80px;
+        box-shadow: #ff0000;
       }
       .form {
         @include flex;
@@ -105,7 +139,7 @@ const login = () => {
         box-sizing: border-box;
         border: 2px solid rgba(255, 255, 255, 0.2);
         backdrop-filter: blur(10px);
-        margin-top: 12px;
+        margin-top: 24px;
         border-radius: 4px;
         cursor: pointer;
         transition: 0.2s all;

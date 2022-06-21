@@ -71,7 +71,7 @@ watchEffect(() => {
   p {
     margin: 0;
     font-size: var(--fontSize_Regular_regular);
-    color: $commonColor_white;
+    color: $fontColor_M8;
     line-height: 20px;
     text-align: center;
     user-select: none;
