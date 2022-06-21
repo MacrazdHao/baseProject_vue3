@@ -2,22 +2,19 @@
 import { ref } from "vue";
 import { storeToRefs } from "pinia";
 import modules from "@/store/index";
-
-const counterStore = modules.counter();
-const { count } = storeToRefs(counterStore);
-const onclick = () => {
-  counterStore.increment();
-};
 </script>
 
 <template>
   <div class="Index">
-    <router-view></router-view>
+    <router-view v-slot="{ Component }">
+      <transition name="slide-fade">
+        <component :is="Component" />
+      </transition>
+    </router-view>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .Index {
-  
 }
 </style>

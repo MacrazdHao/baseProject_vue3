@@ -7,16 +7,32 @@ const routes: Array<RouteRecordRaw> = [
     path: "/",
     name: "Login",
     alias: "/login",
-    component: () => import("../pages/Login/index.vue"),
+    component: () => import("@/pages/Login/index.vue"),
     beforeEnter: (to, from, next) => {
       if (getToken()) next("/index");
       else next();
     },
   },
-  // {
-  //   path: "/",
-  //   component: () => import("../pages/HelloWorld.vue"),
-  // },
+  {
+    path: "/index",
+    name: "Index",
+    component: () => import("@/pages/index.vue"),
+    beforeEnter: (to, from, next) => {
+      if (!getToken()) next("/");
+      else next();
+    },
+    children: [
+      {
+        path: "",
+        redirect: "/index/dashboard",
+      },
+      {
+        path: "dashboard",
+        name: "Dashboard",
+        component: () => import("@/pages/Dashboard/index.vue"),
+      },
+    ],
+  },
 ];
 
 const router = createRouter({

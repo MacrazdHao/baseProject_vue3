@@ -1,5 +1,8 @@
 import Cookies from "js-cookie";
 import CookiesKeys from "@/utils/global/cookiesKeys";
+import { ref } from "vue";
+
+export const tokenRef = ref("");
 
 export function getTmpToken() {
   return Cookies.get(CookiesKeys.TmpTokenKey);
@@ -16,17 +19,21 @@ export function removeTmpToken() {
 }
 
 export function getToken() {
-  return Cookies.get(CookiesKeys.TokenKey);
+  const token = Cookies.get(CookiesKeys.TokenKey) || "";
+  tokenRef.value = token;
+  return token;
 }
 
 export function setToken(token: string) {
   removeToken();
+  tokenRef.value = token;
   return Cookies.set(CookiesKeys.TokenKey, token);
 }
 
 export function removeToken() {
   const res = Cookies.remove(CookiesKeys.TokenKey);
-  window.location.reload();
+  tokenRef.value = "";
+  // window.location.reload();
   return res;
 }
 

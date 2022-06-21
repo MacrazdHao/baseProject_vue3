@@ -11,7 +11,7 @@ $activeOpactiy: 0.9;
 @function getActive($hex_color) {
   @return rgba(red($hex_color)-10, green($hex_color)-10, blue($hex_color)-10, $hoverOpactiy);
 }
-@function getThemeRgba($hex_color, $opacity) {
+@function getThemeRgba($hex_color, $opacity: 1) {
   @return rgba($hex_color, $opacity);
 }
 @mixin messageShadow($hex_color) {
@@ -101,6 +101,7 @@ $borderColor_M4: $commonGray8;
 $borderColor_M5: $commonGray11;
 $borderColor_M6: $commonGray10;
 $borderColor_M7: $commonGray18;
+$borderColor_M8: $commonGray6;
 
 $backgroundColor_M1: $commonGray4;
 $backgroundColor_M2: $commonGray5;
@@ -109,6 +110,10 @@ $backgroundColor_M4: $commonGray15;
 $backgroundColor_M5: $commonGray16;
 $backgroundColor_M6: $commonGray17;
 $backgroundColor_M7: $commonGray18;
+$backgroundColor_M8: $commonGray1;
+$backgroundColor_M9: $commonGray2;
+$backgroundColor_M10: $commonGray3;
+$backgroundColor_M11: $commonGray7;
 
 $shadowColor_Gray1: $commonGray1;
 $shadowColor_Gray2: $commonGray12;
