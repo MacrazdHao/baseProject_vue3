@@ -59,21 +59,6 @@ const login = () => {
   @include flex(row, flex-end);
   height: 100%;
   width: 100%;
-  // background: url("@/assets/logo.png");
-  // background-image: linear-gradient(
-  //     0deg,
-  //     rgba(0, 0, 0, 0.5) 50%,
-  //     transparent 50%
-  //   ),
-  //   linear-gradient(90deg, rgba(0, 0, 0, 0.5) 50%, transparent 50%);
-  // background-image: radial-gradient(
-  //   circle,
-  //   #333333,
-  //   #606060,
-  //   #929292,
-  //   #c7c7c7,
-  //   #ffffff
-  // );
   background-image: radial-gradient(
     circle,
     #ffffff,
@@ -82,22 +67,19 @@ const login = () => {
     #606060,
     #333333
   );
-  // background-image: linear-gradient(to right top, #333333, #606060, #929292, #c7c7c7, #ffffff);
-  // background-size: 80px 80px;
   animation: bganim 1s linear infinite;
   .shadowBox {
-    @include flex;
+    @include flex();
     backdrop-filter: blur(1px);
     box-shadow: 0 0 10px 0 $shadowColor_Gray1;
     background-color: rgba(0, 0, 0, 0.8);
-    // background-image: linear-gradient(to left, #33333332, #60606032, #92929232, #c7c7c732, #ffffff32);
     height: calc(100% - 24px);
     width: calc(50% - 24px);
     max-width: 600px;
     margin-right: 24px;
     border-radius: 4px;
     .loginBox {
-      @include flex;
+      @include flex();
       background-color: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(2px);
       border: 2px solid rgba(190, 190, 190, 0.1);
@@ -109,13 +91,10 @@ const login = () => {
         box-shadow: #ff0000;
       }
       .form {
-        @include flex;
+        @include flex();
         margin-top: 32px;
         border-radius: 4px;
         overflow: hidden;
-        // .form-item + .form-item {
-        //   margin-top: 12px;
-        // }
         &-item {
           &-input {
             background-color: rgba(255, 255, 255, 0.1);

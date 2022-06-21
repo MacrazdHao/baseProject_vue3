@@ -14,6 +14,7 @@ const { visible, tips } = getDataRefs();
 
 <style lang="scss" scoped>
 .Loading {
+  @include flex(column);
   background-color: getThemeRgba($themeColor_Black, 0.8);
   width: 100%;
   height: 100%;
@@ -21,10 +22,6 @@ const { visible, tips } = getDataRefs();
   left: 0;
   top: 0;
   z-index: 1999;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   backdrop-filter: blur(2px);
   img {
     width: 50px;
