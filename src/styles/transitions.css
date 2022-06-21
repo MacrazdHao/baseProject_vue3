@@ -1,5 +1,9 @@
 .slide-fade-enter-active {
-  transition: all 0.3s ease 0.3s;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.3s ease-in 0.3s;
 }
 
 .slide-fade-leave-active {

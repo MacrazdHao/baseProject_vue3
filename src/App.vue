@@ -1,9 +1,13 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { tokenRef } from "@/utils/request/auth";
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
+import { useRouter } from "vue-router";
+const router = useRouter();
 const ver = ref(process.env.version);
+watch(tokenRef, () => {
+  if (!!tokenRef.value) router.push({ path: "/index/dashboard" });
+  else router.push({ path: "/" });
+});
 </script>
 
 <template>
@@ -15,7 +19,7 @@ const ver = ref(process.env.version);
   >
     <router-view v-slot="{ Component }">
       <transition name="slide-fade">
-        <component :is="Component" />
+        <component class="page" :is="Component" />
       </transition>
     </router-view>
   </div>
@@ -36,8 +40,7 @@ const ver = ref(process.env.version);
     $backgroundColor_M9
   );
   .shadowBox--beforeLogin {
-    width: calc(50% - 24px);
-    max-width: 600px;
+    width: 600px;
     margin-right: 24px;
   }
   .shadowBox--afterLogin {
@@ -51,7 +54,14 @@ const ver = ref(process.env.version);
     background-color: getThemeRgba($backgroundColor_M8, 0.8);
     height: calc(100% - 24px);
     border-radius: 4px;
-    transition: 0.3s all;
+    transition: 0.6s all;
+    position: relative;
+    overflow: auto;
+    .page {
+      @include flex();
+      width: 100%;
+      height: 100%;
+    }
   }
 }
 </style>
