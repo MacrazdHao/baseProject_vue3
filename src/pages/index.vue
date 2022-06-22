@@ -136,6 +136,7 @@ const jumpTo = (to: RouteRecordRaw | undefined, fromPath: boolean = false) => {
                           : child.meta.title || ""
                       }}
                     </p>
+                    <div class="bottomLine"></div>
                   </div>
                 </template>
               </div>
@@ -297,6 +298,7 @@ const jumpTo = (to: RouteRecordRaw | undefined, fromPath: boolean = false) => {
             background-color: $buttonColor_Black_active !important;
             .menuList-itemBox-parent-title {
               color: $fontColor_M8 !important;
+              text-shadow: 0 0 6px $backgroundColor_M11;
             }
             .childTipsIcon {
               .lineIcon {
@@ -317,22 +319,35 @@ const jumpTo = (to: RouteRecordRaw | undefined, fromPath: boolean = false) => {
             transition: 0.3s all;
             overflow: hidden;
             &-item {
-              @include flex(row);
+              @include flex(column, center, flex-end);
               width: 100%;
               height: 36px;
               &-title {
                 @include userSelect();
                 @include ellipsis(calc(100% - 34px));
-                width: 100%;
+                width: fit-content;
                 color: $fontColor_M5;
                 transition: 0.2s all;
                 text-align: end;
                 cursor: pointer;
               }
+              .bottomLine {
+                width: 0;
+                height: 1px;
+                background-color: none;
+                transition: 0.2s all;
+                margin-top: 8px;
+              }
             }
             &-item--selected {
               .menuList-itemBox-children-item-title {
                 color: $fontColor_M8 !important;
+                text-shadow: 0 0 6px $shadowColor_Gray4;
+              }
+              .bottomLine {
+                width: 100%;
+                background-color: $fontColor_M8;
+                box-shadow: 0 0 6px $shadowColor_Gray4;
               }
             }
           }
@@ -389,6 +404,7 @@ const jumpTo = (to: RouteRecordRaw | undefined, fromPath: boolean = false) => {
                 }
                 .routeTitle--current {
                   background-color: $buttonColor_Black_active;
+                  text-shadow: 0 0 6px $shadowColor_Gray4;
                 }
                 .routeTitle {
                   @include flex();
