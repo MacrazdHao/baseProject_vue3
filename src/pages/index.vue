@@ -335,8 +335,49 @@ const jumpTo = (to: RouteRecordRaw | undefined, fromPath: boolean = false) => {
                 width: 0;
                 height: 1px;
                 background-color: none;
-                transition: 0.2s all;
+                transition: 0.3s all ease;
                 margin-top: 8px;
+              }
+              @keyframes test-easeOutBounce {
+                0% {
+                  width: 0%;
+                }
+
+                12% {
+                  width: 10.89%;
+                }
+
+                24% {
+                  width: 43.56%;
+                }
+
+                36% {
+                  width: 98.01%;
+                }
+
+                54% {
+                  width: 75.02%;
+                }
+
+                74% {
+                  width: 98.37%;
+                }
+
+                82% {
+                  width: 93.75%;
+                }
+
+                92% {
+                  width: 99.34%;
+                }
+
+                96% {
+                  width: 98.46%;
+                }
+
+                100% {
+                  width: 100%;
+                }
               }
             }
             &-item--selected {
@@ -346,6 +387,7 @@ const jumpTo = (to: RouteRecordRaw | undefined, fromPath: boolean = false) => {
               }
               .bottomLine {
                 width: 100%;
+                animation: test-easeOutBounce 0.6s linear;
                 background-color: $fontColor_M8;
                 box-shadow: 0 0 6px $shadowColor_Gray4;
               }
