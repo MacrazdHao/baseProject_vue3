@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import icon from "@/components/icon.vue";
 import { onMounted, ref, watch, watchEffect } from "vue";
 import { storeToRefs } from "pinia";
 import modules from "@/store/index";
@@ -77,7 +78,8 @@ const jumpTo = (to: RouteRecordRaw | undefined, fromPath: boolean = false) => {
     <div class="indexBox">
       <div class="menu">
         <div class="logoBox">
-          <img class="logo" src="@/assets/logo.svg" />
+          <!-- <img class="logo" src="@/assets/logo.svg" /> -->
+          <icon />
         </div>
         <div class="menuList">
           <template v-for="(item, index) in menus" :key="`menu-${index}`">
