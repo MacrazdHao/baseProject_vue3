@@ -19,3 +19,25 @@
 .slide-fade-leave-from {
   opacity: 1;
 }
+
+.slide-drawer-enter-active {
+  z-index: -1;
+  transition: all 0.3s ease;
+}
+
+.slide-drawer-leave-active {
+  z-index: -1;
+  transition: all 0.3s ease;
+}
+
+.slide-drawer-enter-from,
+.slide-drawer-leave-to {
+  opacity: 0;
+  transform: translate(0, -100%) scaleY(0);
+}
+
+.slide-drawer-enter-to,
+.slide-drawer-leave-from {
+  opacity: 1;
+  transform: translate(0, 0) scaleY(1);
+}

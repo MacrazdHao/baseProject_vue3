@@ -1,29 +1,74 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { onMounted, ref, watch, watchEffect } from "vue";
 import { storeToRefs } from "pinia";
 import modules from "@/store/index";
 import { RouteRecordRaw, useRoute, useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
+import Lodash from "lodash";
 const { t, locale } = useI18n();
 const route = useRoute();
 const router = useRouter();
-const menus = router.options.routes[1].children?.filter(
-  (item, index) => index > 0
-);
+const menus =
+  router.options.routes[1].children?.filter((item, index) => index > 0) || [];
+const showingParent = ref<Array<string>>([]);
+const curRouteName = ref<string>("");
+const childrenStyle = ref<any>({});
 
-const curMenu = ref(route.name);
-// const menuPath = ref(router.currentRoute.value.matched)
-watch(router.currentRoute, () => {
-  console.log(router.currentRoute.value);
+const childrenShowStyle = (toggle: boolean, length: number) => {
+  if (length < 0) return {};
+  return {
+    marginTop: toggle ? "8px" : 0,
+    height: toggle ? `${length * 36}px` : 0,
+    opacity: toggle ? 1 : 0,
+  };
+};
+
+onMounted(() => {
+  const curParentName =
+    router.currentRoute.value.matched[1].name?.toString() ||
+    `notFound-${new Date().getTime()}`;
+  for (let i = 0; i < menus.length; i++) {
+    if (menus[i].children) {
+      const length = (menus[i].children?.length || 0) - 1;
+      const routeName =
+        menus[i].name?.toString() || `notFound-${new Date().getTime()}`;
+      const isShowing = curParentName == routeName;
+      childrenStyle.value[routeName] = childrenShowStyle(isShowing, length);
+      if (isShowing) showingParent.value.push(routeName);
+    }
+  }
 });
 
-const jumpTo = (route: RouteRecordRaw) => {
-  // if (route.children) {
+watchEffect(() => {
+  curRouteName.value =
+    route.name?.toString() || `notFound-${new Date().getTime()}`;
+});
 
-  //   return;
-  // }
-  console.log(route);
-  router.push({ name: route.name == "Index" ? "Dashboard" : route.name });
+const jumpTo = (to: RouteRecordRaw | undefined, fromPath: boolean = false) => {
+  if (!to) {
+    router.push({ name: "Dashboard" });
+    return;
+  }
+  if (route.name == to.name) return;
+  if (to.children && !fromPath) {
+    const routeName = to.name?.toString() || `notFound-${new Date().getTime()}`;
+    // 开关
+    const length = to.children.length - 1;
+    if (showingParent.value.includes(routeName)) {
+      childrenStyle.value[routeName] = childrenShowStyle(false, length);
+      showingParent.value = showingParent.value.filter(
+        (item) => item != routeName
+      );
+    } else {
+      showingParent.value.push(routeName);
+      childrenStyle.value[routeName] = childrenShowStyle(true, length);
+    }
+    return;
+  } else if (to.children && fromPath) {
+    router.push({ path: to.children[1].path });
+    return;
+  }
+  router.push({ name: to.name == "Index" ? "Dashboard" : to.name });
 };
 </script>
 
@@ -35,40 +80,100 @@ const jumpTo = (route: RouteRecordRaw) => {
           <img class="logo" src="@/assets/logo.svg" />
         </div>
         <div class="menuList">
-          <div
-            :class="[
-              'menuList-item',
-              route.name === item.name ? 'menuList-item--selected' : '',
-            ]"
-            v-for="(item, index) in menus"
-            :key="`menu-${index}`"
-            @click="jumpTo(item)"
-          >
-            <p>{{ t(`routes.${item.meta.titleKey}`) }}</p>
-          </div>
+          <template v-for="(item, index) in menus" :key="`menu-${index}`">
+            <div
+              class="menuList-itemBox"
+              v-if="item.meta && item.meta.showInMenu"
+            >
+              <div
+                :class="[
+                  'menuList-itemBox-parent',
+                  route.name === item.name || showingParent.includes(item.name)
+                    ? 'menuList-itemBox-parent--selected'
+                    : '',
+                ]"
+                @click="jumpTo(item)"
+              >
+                <div class="childTipsIcon"></div>
+                <p class="menuList-itemBox-parent-title">
+                  {{
+                    item.meta.titleKey
+                      ? t(`routes.${item.meta.titleKey}`)
+                      : item.meta.title || ""
+                  }}
+                </p>
+                <div class="childTipsIcon">
+                  <div class="lineIcon" v-if="item.children">
+                    <div class="upline"></div>
+                    <div class="bottomline"></div>
+                  </div>
+                </div>
+              </div>
+              <!-- <transition name="slide-drawer"> -->
+              <div
+                class="menuList-itemBox-children"
+                :style="childrenStyle[item.name]"
+                v-if="item.children"
+              >
+                <template
+                  v-for="(child, childIndex) in item.children"
+                  :key="`menu-child-${childIndex}`"
+                >
+                  <div
+                    :class="[
+                      'menuList-itemBox-children-item',
+                      route.name === child.name
+                        ? 'menuList-itemBox-children-item--selected'
+                        : '',
+                    ]"
+                    v-if="child.meta && child.meta.showInMenu"
+                    @click="jumpTo(child)"
+                  >
+                    <p class="menuList-itemBox-children-item-title">
+                      {{
+                        child.meta.titleKey
+                          ? t(`routes.${child.meta.titleKey}`)
+                          : child.meta.title || ""
+                      }}
+                    </p>
+                  </div>
+                </template>
+              </div>
+              <!-- </transition> -->
+            </div>
+          </template>
         </div>
       </div>
       <div class="pageBox">
         <div class="header">
-          <div class="routePath">
-            <div
-              class="routeItem"
-              v-for="(item, index) in router.currentRoute.value.matched"
-              :key="index"
-            >
-              <div class="routeImgBox" v-if="index == 0" @click="jumpTo(item)">
-                <img class="routeImg" src="@/assets/home.svg" />
+          <div class="routePathBox">
+            <div class="routeImgBox" @click="jumpTo()">
+              <img class="routeImg" src="@/assets/home.svg" />
+            </div>
+            <div class="routePathContent">
+              <div class="routePath">
+                <template
+                  v-for="(item, index) in router.currentRoute.value.matched"
+                  :key="index"
+                >
+                  <div class="routeItem" v-if="index > 0">
+                    <p class="slash">/</p>
+                    <p
+                      :class="[
+                        'routeTitle',
+                        route.name == item.name ? 'routeTitle--current' : '',
+                      ]"
+                      @click="jumpTo(item, true)"
+                    >
+                      {{
+                        item.meta.titleKey
+                          ? t(`routes.${item.meta.titleKey}`)
+                          : item.meta.title || ""
+                      }}
+                    </p>
+                  </div>
+                </template>
               </div>
-              <p
-                :class="[
-                  'routeTitle',
-                  route.name == item.name ? 'routeTitle--current' : '',
-                ]"
-                v-else
-                @click="jumpTo(item)"
-              >
-                {{ t(`routes.${item.meta.titleKey}`) }}
-              </p>
             </div>
           </div>
           <div class="toolBox">
@@ -81,11 +186,13 @@ const jumpTo = (route: RouteRecordRaw) => {
             </div>
           </div>
         </div>
-        <router-view v-slot="{ Component }">
-          <transition name="slide-fade">
-            <component class="pageView" :is="Component" />
-          </transition>
-        </router-view>
+        <div class="content">
+          <router-view v-slot="{ Component }">
+            <transition name="slide-fade">
+              <component class="pageView" :is="Component" />
+            </transition>
+          </router-view>
+        </div>
       </div>
     </div>
   </div>
@@ -116,27 +223,119 @@ const jumpTo = (route: RouteRecordRaw) => {
         height: calc(100% - 132px);
         padding-right: 12px;
         overflow: auto;
-        &-item {
+        transition: 0.2s all;
+        &-itemBox {
           @include flex();
-          @include userSelect();
           width: 100%;
-          height: 48px;
-          background-color: $buttonColor_Black;
-          color: $fontColor_M8;
-          cursor: pointer;
-          border-radius: 4px;
-          overflow: hidden;
-          margin-top: 12px;
           transition: 0.2s all;
-        }
-        &-item:hover {
-          background-color: $buttonColor_Black_hover;
-        }
-        &-item:active {
-          background-color: $buttonColor_Black_active;
-        }
-        &-item--selected {
-          background-color: $buttonColor_Black_active !important;
+          &-parent {
+            @include flex(row, space-between);
+            width: 100%;
+            height: 48px;
+            padding: 0 8px;
+            background-color: $buttonColor_Black;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-top: 12px;
+            transition: 0.2s all;
+            &-title {
+              @include userSelect();
+              @include ellipsis(calc(100% - 34px));
+              color: $fontColor_M5;
+              transition: 0.2s all;
+            }
+            .childTipsIcon {
+              @include flex();
+              width: 6px;
+              // height: 100%;
+              height: calc(100% - 28px);
+              .lineIcon {
+                @include flex(column, space-between);
+                @include fullSize();
+                div {
+                  width: 4px;
+                  border-radius: 4px;
+                  transition: 0.3s all ease;
+                  background-color: $fontColor_M5;
+                }
+                .upline {
+                  height: 4px;
+                }
+                .bottomline {
+                  height: calc(100% - 8px);
+                }
+              }
+            }
+          }
+          &-parent:hover {
+            background-color: $buttonColor_Black_hover;
+            .menuList-itemBox-parent-title {
+              color: $fontColor_M7 !important;
+            }
+            .childTipsIcon {
+              .lineIcon {
+                div {
+                  background-color: $fontColor_M7;
+                }
+              }
+            }
+          }
+          &-parent:active {
+            background-color: $buttonColor_Black_active;
+            .menuList-itemBox-parent-title {
+              color: $fontColor_M8 !important;
+            }
+            .childTipsIcon {
+              .lineIcon {
+                div {
+                  background-color: $fontColor_M8;
+                }
+              }
+            }
+          }
+          &-parent--selected {
+            background-color: $buttonColor_Black_active !important;
+            .menuList-itemBox-parent-title {
+              color: $fontColor_M8 !important;
+            }
+            .childTipsIcon {
+              .lineIcon {
+                div {
+                  background-color: $fontColor_M8;
+                }
+                .upline {
+                  height: calc(100% - 8px);
+                }
+                .bottomline {
+                  height: 4px;
+                }
+              }
+            }
+          }
+          &-children {
+            width: 100%;
+            transition: 0.3s all;
+            overflow: hidden;
+            &-item {
+              @include flex(row);
+              width: 100%;
+              height: 36px;
+              &-title {
+                @include userSelect();
+                @include ellipsis(calc(100% - 34px));
+                width: 100%;
+                color: $fontColor_M5;
+                transition: 0.2s all;
+                text-align: end;
+                cursor: pointer;
+              }
+            }
+            &-item--selected {
+              .menuList-itemBox-children-item-title {
+                color: $fontColor_M8 !important;
+              }
+            }
+          }
         }
       }
     }
@@ -150,45 +349,62 @@ const jumpTo = (route: RouteRecordRaw) => {
         width: 100%;
         padding-bottom: 6px;
         border-bottom: 1px solid $borderColor_M3;
-        .routePath {
-          @include flex(row);
-          padding-bottom: 6px;
-          overflow: auto;
-          .routeItem {
-            .routeImgBox {
-              @include flex();
-              transition: 0.2s all;
-              width: 36px;
-              height: 36px;
-              border-radius: 36px;
-              cursor: pointer;
-              margin-right: 6px;
-              .routeImg {
-                width: 24px;
-                height: auto;
+        .routePathBox {
+          @include flex(row, flex-start, flex-start);
+          width: calc(100% - 260px);
+          .routeImgBox {
+            @include flex();
+            transition: 0.2s all;
+            width: 36px;
+            height: 36px;
+            border-radius: 36px;
+            cursor: pointer;
+            margin-right: 6px;
+            .routeImg {
+              width: 24px;
+              height: auto;
+            }
+          }
+          .routeImgBox:hover {
+            background-color: $buttonColor_Black_hover;
+          }
+          .routePathContent {
+            @include flex(row-reverse, flex-start);
+            width: fit-content;
+            max-width: calc(100% - 42px);
+            overflow: auto;
+            padding-bottom: 6px;
+            .routePath {
+              @include flex(row, flex-start);
+              width: fit-content;
+              .routeItem {
+                @include flex(row);
+                p {
+                  color: $fontColor_M8;
+                  font-size: var(--fontSize_Regular_medium);
+                }
+                .slash {
+                  width: 12px;
+                  margin: 0 6px;
+                }
+                .routeTitle--current {
+                  background-color: $buttonColor_Black_active;
+                }
+                .routeTitle {
+                  @include flex();
+                  @include ellipsis(120px);
+                  // margin-left: 6px;
+                  cursor: pointer;
+                  transition: 0.2s all;
+                  border-radius: 4px;
+                  min-width: 80px;
+                  height: 36px;
+                  padding: 0 12px;
+                }
+                .routeTitle:hover {
+                  background-color: $buttonColor_Black_hover;
+                }
               }
-            }
-            .routeImgBox:hover {
-              background-color: $buttonColor_Black_hover;
-            }
-            .routeTitle--current {
-              background-color: $buttonColor_Black_active;
-            }
-            .routeTitle {
-              @include flex();
-              @include ellipsis(120px);
-              margin-left: 6px;
-              color: $fontColor_M8;
-              font-size: var(--fontSize_Regular_medium);
-              cursor: pointer;
-              transition: 0.2s all;
-              border-radius: 4px;
-              min-width: 80px;
-              height: 36px;
-              padding: 0 12px;
-            }
-            .routeTitle:hover {
-              background-color: $buttonColor_Black_hover;
             }
           }
         }
@@ -222,10 +438,16 @@ const jumpTo = (route: RouteRecordRaw) => {
           }
         }
       }
-      .pageView {
+      .content {
         @include flex();
-        width: 100%;
+        position: relative;
         height: 100%;
+        width: 100%;
+        .pageView {
+          @include flex();
+          width: 100%;
+          height: 100%;
+        }
       }
     }
   }

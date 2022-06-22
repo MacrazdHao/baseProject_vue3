@@ -7,7 +7,6 @@ import { removeToken } from "@/utils/request/auth";
 const { proxy } = getCurrentInstance();
 const counterStore = modules.counter();
 const { count } = storeToRefs(counterStore);
-console.log(useI18n());
 const onclick = () => {
   counterStore.increment();
 };

@@ -4,20 +4,14 @@ import { storeToRefs } from "pinia";
 import modules from "@/store/index";
 import { useI18n } from "vue-i18n";
 import { removeToken } from "@/utils/request/auth";
+// alert("123123")
 </script>
 
 <template>
   <div>
-    <router-view v-slot="{ Component }">
-      <transition name="slide-fade">
-        <component class="pageView" :is="Component" />
-      </transition>
-    </router-view>
+    <p>这是设备列表</p>
   </div>
 </template>
 
 <style lang="scss" scoped>
-h1 {
-  font-size: vw(60);
-}
 </style>

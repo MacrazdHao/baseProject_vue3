@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 import { tokenRef } from "@/utils/request/auth";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 const router = useRouter();
+const route = useRoute();
 const ver = ref(process.env.version);
 watch(tokenRef, () => {
-  if (!!tokenRef.value) router.push({ path: "/index/dashboard" });
-  else router.push({ path: "/" });
+  if (route.name == "Login" && !!tokenRef.value) {
+    router.push({ path: "/index/dashboard" });
+  } else if (!tokenRef.value) router.push({ path: "/" });
 });
 </script>
 

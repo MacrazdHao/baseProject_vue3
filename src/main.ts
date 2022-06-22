@@ -10,8 +10,6 @@ import "@/styles/transitions.css";
 import { MessagePlugin } from "@/components/Message/index";
 import { LoadingPlugin } from "@/components/Loading/index";
 
-console.log(i18n);
-
 const lang = getLocale();
 let langGlobalStyle =
   lang === "zh"
