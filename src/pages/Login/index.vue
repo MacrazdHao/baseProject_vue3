@@ -3,7 +3,7 @@ import { getCurrentInstance, ref, watch } from "vue";
 import { storeToRefs } from "pinia";
 import modules from "@/store/index";
 import songButton from "@/components/common/songButton.vue";
-import icon from "@/components/icon.vue";
+import icon2 from "@/components/icon2.vue";
 import { setToken, tokenRef } from "@/utils/request/auth";
 
 // const { proxy } = getCurrentInstance();
@@ -24,7 +24,7 @@ const login = () => {
   <div class="Login">
     <div class="loginBox">
       <!-- <img class="logo" src="@/assets/logo.svg" /> -->
-      <icon />
+      <icon2 :size="140" />
       <div class="form">
         <div class="form-item">
           <input class="form-item-input" placeholder="请输入帐号" />

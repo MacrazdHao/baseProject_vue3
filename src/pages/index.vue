@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import icon from "@/components/icon.vue";
+import icon2 from "@/components/icon2.vue";
 import { onMounted, ref, watch, watchEffect } from "vue";
 import { storeToRefs } from "pinia";
 import modules from "@/store/index";
@@ -79,7 +79,7 @@ const jumpTo = (to: RouteRecordRaw | undefined, fromPath: boolean = false) => {
       <div class="menu">
         <div class="logoBox">
           <!-- <img class="logo" src="@/assets/logo.svg" /> -->
-          <icon />
+          <icon2 :size="140" />
         </div>
         <div class="menuList">
           <template v-for="(item, index) in menus" :key="`menu-${index}`">
@@ -309,9 +309,11 @@ const jumpTo = (to: RouteRecordRaw | undefined, fromPath: boolean = false) => {
                 }
                 .upline {
                   height: calc(100% - 8px);
+                  box-shadow: 0 0 6px $shadowColor_Gray4;
                 }
                 .bottomline {
                   height: 4px;
+                  box-shadow: 0 0 6px $shadowColor_Gray4;
                 }
               }
             }
