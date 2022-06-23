@@ -13,6 +13,7 @@ const eyeHoleSize = eyeBallSize / 4;
 const minEyeHoleSize = eyeBallSize / 8;
 const eyeBallStyle = ref<any>({});
 const eyeHoleStyle = ref<any>({});
+const eyeWhiteStyle = ref<any>({});
 
 const app = document.getElementById("app");
 onBeforeUnmount(() => {
@@ -31,7 +32,7 @@ onMounted(() => {
     eye.style.borderRadius = `${eyeSize}px`;
     eyeWhite.style.width = `${eyeSize / 1.4}px`;
     eyeWhite.style.height = `${eyeSize / 1.4}px`;
-    eyeWhite.style.borderTopLeftRadius = `${eyeSize}px`;
+    eyeWhite.style.borderTopLeftRadius = `${eyeSize * 1.2}px`;
     eyeWhite.style.borderBottomRightRadius = `${eyeSize}px`;
     eyeLight.style.boxShadow = `${eyeSize / 20}px ${eyeSize / 20}px ${
       eyeSize / 10
@@ -102,6 +103,23 @@ const moveBall = (e: any) => {
     width: `${curEyeHoleSize}px`,
     height: `${curEyeHoleSize}px`,
   };
+
+  const maxYDist = axisScope.y - viewPos.y;
+  const curYDist = mousePos.y - viewPos.y;
+  let upTrans: any = {};
+  let curEyeWhiteSize = (eyeSize / 2) * (1.8 - curYDist / maxYDist);
+  if (curYDist <= 0) {
+    curEyeWhiteSize = (eyeSize / 2) * (0.9 + curYDist / maxYDist);
+  }
+  if (mousePos.y < eyeSize * 2) {
+    upTrans = { transition: "0.15s all" };
+  }
+  eyeWhiteStyle.value = {
+    ...upTrans,
+    borderTopLeftRadius: `${curEyeWhiteSize * 1.2}px`,
+    borderBottomRightRadius: `${curEyeWhiteSize * 1.2}px`,
+  };
+
   if (props.shadow) {
     let ball = document.getElementById(`IconBall${iconId}`);
     let hole = document.getElementById(`IconHole${iconId}`);
@@ -136,7 +154,7 @@ const moveBall = (e: any) => {
         shadowLight.style.width = `0`;
         shadowLight.style.height = `0`;
         setTimeout(() => {
-          ball?.removeChild(shadowLight);
+          app?.removeChild(shadowLight);
         }, 100);
       }, 100);
     }
@@ -146,7 +164,11 @@ const moveBall = (e: any) => {
 <template>
   <div class="Icon2">
     <div :id="`IconView${iconId}`" class="view">
-      <div :id="`IconWhite${iconId}`" class="eyeWhite"></div>
+      <div
+        :id="`IconWhite${iconId}`"
+        class="eyeWhite"
+        :style="eyeWhiteStyle"
+      ></div>
       <div :id="`IconLight${iconId}`" class="eyeLight"></div>
       <div :id="`IconBall${iconId}`" class="ball" :style="eyeBallStyle">
         <div
@@ -185,6 +207,7 @@ const moveBall = (e: any) => {
       top: 50%;
       transform: translate(-50%, -50%) rotate(60deg);
       z-index: 3;
+      // transition: 0.05s all;
     }
     .ball {
       @include flex();
