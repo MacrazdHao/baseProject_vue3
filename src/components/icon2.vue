@@ -108,14 +108,14 @@ const moveBall = (e: any) => {
     if (ball && hole) {
       let holeRect = hole.getBoundingClientRect();
       const shadowLight = document.createElement("div");
-      shadowLight.id = `shadowLight${Lodash.uniqueId()}${new Date().getTime()}`;
+      shadowLight.id = `shadowLight${Lodash.uniqueId(`${iconId}-`)}${new Date().getTime()}`;
       shadowLight.style.opacity = "0";
       shadowLight.style.position = "fixed";
       shadowLight.style.left = `${
-        holeRect.x - 32 + curEyeHoleSize / 2 - shadowLightSize / 2
+        holeRect.x + curEyeHoleSize / 2 - shadowLightSize / 2
       }px`;
       shadowLight.style.top = `${
-        holeRect.y - 18 + curEyeHoleSize / 2 - shadowLightSize / 2
+        holeRect.y + curEyeHoleSize / 2 - shadowLightSize / 2
       }px`;
       shadowLight.style.transition = "0.3s all ease";
       shadowLight.style.background = "red";
@@ -126,8 +126,8 @@ const moveBall = (e: any) => {
       shadowLight.style.borderRadius = `${shadowLightSize}px`;
       shadowLight.style.width = `${shadowLightSize}px`;
       shadowLight.style.height = `${shadowLightSize}px`;
-      ball.appendChild(shadowLight);
-      shadowLight.style.opacity = "1";
+      app?.appendChild(shadowLight); 
+      shadowLight.style.opacity = "0.6";
       setTimeout(() => {
         shadowLight.style.opacity = "0";
         shadowLight.style.width = `0`;
