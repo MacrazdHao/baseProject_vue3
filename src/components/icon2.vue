@@ -30,9 +30,9 @@ onBeforeUnmount(() => {
 onMounted(() => {
   app?.addEventListener("mousemove", moveBall);
   moveBall({ pageX: 500, pageY: 500 });
-  let eye = document.getElementById(`IconView${iconId}`);
-  let eyeWhite = document.getElementById(`IconWhite${iconId}`);
-  let eyeLight = document.getElementById(`IconLight${iconId}`);
+  let eye = document.getElementById(`EyeView${iconId}`);
+  let eyeWhite = document.getElementById(`EyeWhite${iconId}`);
+  let eyeLight = document.getElementById(`EyeLight${iconId}`);
   if (eye && eyeWhite && eyeLight) {
     eye.style.width = `${eyeSize}px`;
     eye.style.height = `${eyeSize}px`;
@@ -45,13 +45,13 @@ onMounted(() => {
       eyeSize / 7
     }px ${eyeSize / 10}px #f0f0f0`;
   }
-  let eyeHole = document.getElementById(`IconHole${iconId}`);
+  let eyeHole = document.getElementById(`EyeHole${iconId}`);
   if (eyeHole) {
     eyeHole.style.width = `${eyeHoleSize}px`;
     eyeHole.style.height = `${eyeHoleSize}px`;
     eyeHole.style.borderRadius = `${eyeHoleSize}px`;
   }
-  let ball = document.getElementById(`IconBall${iconId}`);
+  let ball = document.getElementById(`EyeBall${iconId}`);
   if (ball) {
     ball.style.width = `${eyeBallSize}px`;
     ball.style.height = `${eyeBallSize}px`;
@@ -60,7 +60,7 @@ onMounted(() => {
 });
 
 const moveBall = (e: any) => {
-  let view = document.getElementById(`IconView${iconId}`);
+  let view = document.getElementById(`EyeView${iconId}`);
   if (!view) return;
   let viewRect = view.getBoundingClientRect();
   const viewPos = { x: viewRect.x + eyeBallSize, y: viewRect.y + eyeBallSize };
@@ -141,8 +141,8 @@ const moveBall = (e: any) => {
   };
 
   if (props.shadow) {
-    let ball = document.getElementById(`IconBall${iconId}`);
-    let hole = document.getElementById(`IconHole${iconId}`);
+    let ball = document.getElementById(`EyeBall${iconId}`);
+    let hole = document.getElementById(`EyeHole${iconId}`);
     let shadowLightSize = minEyeHoleSize / 3;
     if (ball && hole) {
       let holeRect = hole.getBoundingClientRect();
@@ -195,18 +195,18 @@ const getRandomLine = () => {
 };
 </script>
 <template>
-  <div class="Icon2">
-    <div :id="`IconView${iconId}`" class="view">
+  <div class="Eye">
+    <div :id="`EyeView${iconId}`" class="view">
       <div
-        :id="`IconWhite${iconId}`"
+        :id="`EyeWhite${iconId}`"
         class="eyeWhite"
         :style="eyeWhiteStyle"
       ></div>
-      <div :id="`IconLight${iconId}`" class="eyeLight"></div>
-      <div class="iconMeat"></div>
-      <div :id="`IconBall${iconId}`" class="ball" :style="eyeBallStyle">
+      <div :id="`EyeLight${iconId}`" class="eyeLight"></div>
+      <div class="eyeMeat"></div>
+      <div :id="`EyeBall${iconId}`" class="ball" :style="eyeBallStyle">
         <div
-          class="iconLine"
+          class="eyeLine"
           :style="{
             paddingBottom: `8px`,
             height: `${getRandomLine()}px`,
@@ -278,7 +278,7 @@ const getRandomLine = () => {
           </div>
         </div>
         <div
-          :id="`IconHole${iconId}`"
+          :id="`EyeHole${iconId}`"
           class="eyeHole"
           :style="eyeHoleStyle"
         ></div>
@@ -287,15 +287,13 @@ const getRandomLine = () => {
   </div>
 </template>
 <style lang="scss" scoped>
-.Icon2 {
+.Eye {
   opacity: 0.8;
-  // background: radial-gradient(circle at 10px 10px, #b22222, #708090);
   .view {
     overflow: hidden;
     position: relative;
     z-index: 0;
     background-color: #e0e0e0;
-    // transform: rotate(45deg);
     .eyeLight {
       position: absolute;
       width: 10px;
@@ -313,9 +311,8 @@ const getRandomLine = () => {
       top: 50%;
       transform: translate(-50%, -50%) rotate(60deg);
       z-index: 3;
-      // transition: 0.05s all;
     }
-    .iconMeat {
+    .eyeMeat {
       position: absolute;
       left: 94%;
       background: #ff5151;
@@ -375,7 +372,7 @@ const getRandomLine = () => {
           }
         }
       }
-      .iconLine {
+      .eyeLine {
         position: absolute;
         width: 1px;
         background: linear-gradient(#00000000, #000000, #00000000);
