@@ -4,16 +4,20 @@ import { onBeforeUnmount, onMounted, ref } from "vue-demi";
 
 const props = defineProps({
   size: { type: Number, default: 140 },
-  color: { type: String, default: "red" },
-  shadow: { type: Boolean, default: true },
+  color: { type: String, default: "brown" },
+  shadow: { type: Boolean, default: false },
   xielun: { type: Boolean, default: false },
-  realEye: { type: Boolean, default: false },
+  realEye: { type: Boolean, default: true },
 });
 const iconId = Lodash.uniqueId();
 const eyeSize = props.size;
 const eyeBallSize = eyeSize / 2;
 const eyeHoleSize = eyeBallSize / 4;
 const minEyeHoleSize = eyeBallSize / 8;
+const color = ref(props.color);
+const realEye = ref(props.realEye);
+const xielun = ref(props.xielun);
+const shadow = ref(props.shadow);
 const eyeBallStyle = ref<any>({});
 const eyeHoleStyle = ref<any>({});
 const eyeWhiteStyle = ref<any>({});
@@ -21,6 +25,28 @@ const eyeColors = <any>{
   red: "#b22222, #d2691e",
   brown: "#362616, #4e341c",
   xielun: "#b22222, #f01d1d",
+};
+let curMouse = <any>{ pageX: 500, pageY: 500 };
+
+const changeStyle = () => {
+  if (color.value == "brown") {
+    xielun.value = true;
+    color.value = "xielun";
+    shadow.value = true;
+    realEye.value = false;
+  } else if (color.value == "red") {
+    xielun.value = false;
+    color.value = "brown";
+    shadow.value = false;
+    realEye.value = true;
+  } else if (color.value == "xielun" || xielun.value == true) {
+    xielun.value = false;
+    color.value = "red";
+    shadow.value = false;
+    realEye.value = true;
+  }
+  initEye();
+  moveBall();
 };
 
 const app = document.getElementById("app");
@@ -30,7 +56,11 @@ onBeforeUnmount(() => {
 
 onMounted(() => {
   app?.addEventListener("mousemove", moveBall);
-  moveBall({ pageX: 500, pageY: 500 });
+  initEye();
+  moveBall();
+});
+
+const initEye = () => {
   let eye = document.getElementById(`EyeView${iconId}`);
   let eyeWhite = document.getElementById(`EyeWhite${iconId}`);
   let eyeLight = document.getElementById(`EyeLight${iconId}`);
@@ -51,8 +81,10 @@ onMounted(() => {
     eyeHole.style.width = `${eyeHoleSize}px`;
     eyeHole.style.height = `${eyeHoleSize}px`;
     eyeHole.style.borderRadius = `${eyeHoleSize}px`;
-    if (props.realEye) {
+    if (realEye.value) {
       eyeHole.style.transition = " 0.1s all";
+    } else {
+      eyeHole.style.transition = "";
     }
   }
   let ball = document.getElementById(`EyeBall${iconId}`);
@@ -63,8 +95,10 @@ onMounted(() => {
     ball.style.boxShadow = `rgba(0,0,0,0.15) 0px 0px ${eyeSize / 10}px ${
       eyeSize / 25
     }px`;
-    if (props.realEye) {
+    if (realEye.value) {
       ball.style.transition = " 0.1s all";
+    } else {
+      ball.style.transition = "";
     }
   }
   let insetBox = document.getElementById(`InsetBox${iconId}`);
@@ -73,9 +107,10 @@ onMounted(() => {
       eyeSize / 10
     }px 0px`;
   }
-});
+};
 
-const moveBall = (e: any) => {
+const moveBall = (e: any = curMouse) => {
+  curMouse = e;
   let view = document.getElementById(`EyeView${iconId}`);
   if (!view) return;
   let viewRect = view.getBoundingClientRect();
@@ -109,7 +144,7 @@ const moveBall = (e: any) => {
     top: `${y}px`,
     background: `radial-gradient(circle at ${xDist * 1.6 - x}px ${
       yDist * 1.6 - y
-    }px, ${eyeColors[props.xielun ? "xielun" : props.color]})`,
+    }px, ${eyeColors[xielun.value ? "xielun" : color.value]})`,
   };
 
   const maxDist = Math.sqrt(
@@ -156,7 +191,7 @@ const moveBall = (e: any) => {
     ...upTrans,
   };
 
-  if (props.shadow && !props.realEye) {
+  if (shadow.value && !realEye.value) {
     let ball = document.getElementById(`EyeBall${iconId}`);
     let hole = document.getElementById(`EyeHole${iconId}`);
     let shadowLightSize = minEyeHoleSize / 3;
@@ -211,7 +246,7 @@ const getRandomLine = () => {
 };
 </script>
 <template>
-  <div class="Eye">
+  <div class="Eye" @click="changeStyle">
     <div :id="`EyeView${iconId}`" class="view">
       <div
         :id="`EyeWhite${iconId}`"
@@ -236,62 +271,64 @@ const getRandomLine = () => {
           :key="index"
         ></div>
         <div :id="`InsetBox${iconId}`" class="insetBox">
-          <div class="gous" v-if="props.xielun">
-            <div
-              class="gou d1"
-              :style="{
-                width: `${eyeHoleSize / 2}px`,
-                height: `${eyeHoleSize / 2}px`,
-                boxShadow: `inset #000 ${eyeHoleSize / 6}px -${
-                  eyeHoleSize / 50
-                }px 0`,
-              }"
-            >
+          <transition name="slide-xielun">
+            <div class="gous" v-if="xielun">
               <div
+                class="gou d1"
                 :style="{
-                  width: `${(eyeHoleSize * 0.6) / 2}px`,
-                  height: `${(eyeHoleSize * 0.6) / 2}px`,
-                  left: `${(eyeHoleSize * 0.6) / 6}px`,
+                  width: `${eyeHoleSize / 2}px`,
+                  height: `${eyeHoleSize / 2}px`,
+                  boxShadow: `inset #000 ${eyeHoleSize / 6}px -${
+                    eyeHoleSize / 50
+                  }px 0`,
                 }"
-              ></div>
-            </div>
-            <div
-              class="gou d2"
-              :style="{
-                width: `${eyeHoleSize / 2}px`,
-                height: `${eyeHoleSize / 2}px`,
-                boxShadow: `inset #000 ${eyeHoleSize / 6}px -${
-                  eyeHoleSize / 50
-                }px 0`,
-              }"
-            >
+              >
+                <div
+                  :style="{
+                    width: `${(eyeHoleSize * 0.6) / 2}px`,
+                    height: `${(eyeHoleSize * 0.6) / 2}px`,
+                    left: `${(eyeHoleSize * 0.6) / 6}px`,
+                  }"
+                ></div>
+              </div>
               <div
+                class="gou d2"
                 :style="{
-                  width: `${(eyeHoleSize * 0.6) / 2}px`,
-                  height: `${(eyeHoleSize * 0.6) / 2}px`,
-                  left: `${(eyeHoleSize * 0.6) / 6}px`,
+                  width: `${eyeHoleSize / 2}px`,
+                  height: `${eyeHoleSize / 2}px`,
+                  boxShadow: `inset #000 ${eyeHoleSize / 6}px -${
+                    eyeHoleSize / 50
+                  }px 0`,
                 }"
-              ></div>
-            </div>
-            <div
-              class="gou d3"
-              :style="{
-                width: `${eyeHoleSize / 2}px`,
-                height: `${eyeHoleSize / 2}px`,
-                boxShadow: `inset #000 ${eyeHoleSize / 6}px -${
-                  eyeHoleSize / 50
-                }px 0`,
-              }"
-            >
+              >
+                <div
+                  :style="{
+                    width: `${(eyeHoleSize * 0.6) / 2}px`,
+                    height: `${(eyeHoleSize * 0.6) / 2}px`,
+                    left: `${(eyeHoleSize * 0.6) / 6}px`,
+                  }"
+                ></div>
+              </div>
               <div
+                class="gou d3"
                 :style="{
-                  width: `${(eyeHoleSize * 0.6) / 2}px`,
-                  height: `${(eyeHoleSize * 0.6) / 2}px`,
-                  left: `${(eyeHoleSize * 0.6) / 6}px`,
+                  width: `${eyeHoleSize / 2}px`,
+                  height: `${eyeHoleSize / 2}px`,
+                  boxShadow: `inset #000 ${eyeHoleSize / 6}px -${
+                    eyeHoleSize / 50
+                  }px 0`,
                 }"
-              ></div>
+              >
+                <div
+                  :style="{
+                    width: `${(eyeHoleSize * 0.6) / 2}px`,
+                    height: `${(eyeHoleSize * 0.6) / 2}px`,
+                    left: `${(eyeHoleSize * 0.6) / 6}px`,
+                  }"
+                ></div>
+              </div>
             </div>
-          </div>
+          </transition>
         </div>
         <div
           :id="`EyeHole${iconId}`"
@@ -303,6 +340,26 @@ const getRandomLine = () => {
   </div>
 </template>
 <style lang="scss" scoped>
+.slide-xielun-enter-active {
+  transition: 0.8s all ease;
+}
+
+.slide-xielun-leave-active {
+  transition: 0.8s all ease;
+}
+
+.slide-xielun-enter-from,
+.slide-xielun-leave-to {
+  opacity: 0;
+  transform: scale(0) rotate(0);
+}
+
+.slide-xielun-enter-to,
+.slide-xielun-leave-from {
+  opacity: 1;
+  transform: scale(1) rotate(720deg);
+}
+
 .Eye {
   opacity: 0.8;
   .view {
@@ -345,7 +402,6 @@ const getRandomLine = () => {
       position: absolute;
       overflow: hidden;
       z-index: 1;
-      // transition: 0.1s all;
       .insetBox {
         width: 100%;
         height: 100%;
@@ -379,7 +435,7 @@ const getRandomLine = () => {
           }
           .d2 {
             right: 12%;
-            top: 28%;
+            top: 32%;
             transform: translate(-50%, -50%) rotate(200deg);
           }
           .d3 {

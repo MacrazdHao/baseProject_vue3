@@ -124,7 +124,8 @@ const jumpTo = (to: RouteRecordRaw | undefined, fromPath: boolean = false) => {
                   <div
                     :class="[
                       'menuList-itemBox-children-item',
-                      route.name === child.name
+                      route.name === child.name &&
+                      showingParent.includes(item.name)
                         ? 'menuList-itemBox-children-item--selected'
                         : '',
                     ]"
