@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import Lodash from "lodash";
+import Lodash, { random } from "lodash";
 import { onBeforeUnmount, onMounted, ref } from "vue-demi";
 
 const props = defineProps({
   size: { type: Number, default: 140 },
-  shadow: { type: Boolean, default: true },
+  color: { type: String, default: "red" },
+  shadow: { type: Boolean, default: false },
+  xielun: { type: Boolean, default: true },
 });
 const iconId = Lodash.uniqueId();
 const eyeSize = props.size;
@@ -14,6 +16,11 @@ const minEyeHoleSize = eyeBallSize / 8;
 const eyeBallStyle = ref<any>({});
 const eyeHoleStyle = ref<any>({});
 const eyeWhiteStyle = ref<any>({});
+const eyeColors = <any>{
+  red: "#b22222, #d2691e",
+  brown: "#362616, #4e341c",
+  xielun: "#b22222, #f01d1d",
+};
 
 const app = document.getElementById("app");
 onBeforeUnmount(() => {
@@ -35,7 +42,7 @@ onMounted(() => {
     eyeWhite.style.borderTopLeftRadius = `${eyeSize * 1.2}px`;
     eyeWhite.style.borderBottomRightRadius = `${eyeSize}px`;
     eyeLight.style.boxShadow = `${eyeSize / 20}px ${eyeSize / 20}px ${
-      eyeSize / 10
+      eyeSize / 7
     }px ${eyeSize / 10}px #f0f0f0`;
   }
   let eyeHole = document.getElementById(`IconHole${iconId}`);
@@ -86,7 +93,7 @@ const moveBall = (e: any) => {
     top: `${y}px`,
     background: `radial-gradient(circle at ${xDist * 1.6 - x}px ${
       yDist * 1.6 - y
-    }px, #b22222, #d2691e)`,
+    }px, ${eyeColors[props.xielun ? "xielun" : props.color]})`,
   };
 
   const maxDist = Math.sqrt(
@@ -107,17 +114,30 @@ const moveBall = (e: any) => {
   const maxYDist = axisScope.y - viewPos.y;
   const curYDist = mousePos.y - viewPos.y;
   let upTrans: any = {};
-  let curEyeWhiteSize = (eyeSize / 2) * (1.8 - curYDist / maxYDist);
+  let curEyeWhiteSize = eyeBallSize * (1.8 - curYDist / maxYDist);
   if (curYDist <= 0) {
-    curEyeWhiteSize = (eyeSize / 2) * (0.9 + curYDist / maxYDist);
+    curEyeWhiteSize = Math.max(
+      eyeBallSize * 0.9,
+      eyeBallSize * (0.9 + curYDist / maxYDist)
+    );
   }
   if (mousePos.y < eyeSize * 2) {
-    upTrans = { transition: "0.15s all" };
+    upTrans = {
+      transition: "0.15s all",
+    };
+  }
+  if (curYDist > eyeSize * 2) {
+    upTrans = {
+      transition: "0.15s all",
+      // borderTopLeftRadius: `${curEyeWhiteSize * 1.6}px`,
+      borderTopLeftRadius: `${curEyeWhiteSize * 1.6}px`,
+      // borderBottomRightRadius: `${curEyeWhiteSize * 1.2}px`,
+    };
   }
   eyeWhiteStyle.value = {
-    ...upTrans,
     borderTopLeftRadius: `${curEyeWhiteSize * 1.2}px`,
     borderBottomRightRadius: `${curEyeWhiteSize * 1.2}px`,
+    ...upTrans,
   };
 
   if (props.shadow) {
@@ -153,12 +173,25 @@ const moveBall = (e: any) => {
         shadowLight.style.opacity = "0";
         shadowLight.style.width = `0`;
         shadowLight.style.height = `0`;
+        shadowLight.style.top = `${
+          holeRect.y +
+          curEyeHoleSize / 2 -
+          shadowLightSize / 2 -
+          eyeBallSize / 10
+        }px`;
         setTimeout(() => {
           app?.removeChild(shadowLight);
         }, 100);
       }, 100);
     }
   }
+};
+
+const getRandomLine = () => {
+  return Math.max(
+    (Lodash.random(true) * eyeBallSize) / 4,
+    (0.8 * eyeBallSize) / 4
+  );
 };
 </script>
 <template>
@@ -170,7 +203,80 @@ const moveBall = (e: any) => {
         :style="eyeWhiteStyle"
       ></div>
       <div :id="`IconLight${iconId}`" class="eyeLight"></div>
+      <div class="iconMeat"></div>
       <div :id="`IconBall${iconId}`" class="ball" :style="eyeBallStyle">
+        <div
+          class="iconLine"
+          :style="{
+            paddingBottom: `8px`,
+            height: `${getRandomLine()}px`,
+            top: '50%',
+            left: '50%',
+            transform: `translate(-50%, -180%) rotate(${
+              360 * (index / (eyeBallSize / 2))
+            }deg)`,
+          }"
+          v-for="(item, index) in eyeBallSize / 2"
+          :key="index"
+        ></div>
+        <div class="gousBox" v-if="props.xielun">
+          <div class="gous">
+            <div
+              class="gou d1"
+              :style="{
+                width: `${eyeHoleSize / 2}px`,
+                height: `${eyeHoleSize / 2}px`,
+                boxShadow: `inset #000 ${eyeHoleSize / 6}px -${
+                  eyeHoleSize / 50
+                }px 0`,
+              }"
+            >
+              <div
+                :style="{
+                  width: `${(eyeHoleSize * 0.6) / 2}px`,
+                  height: `${(eyeHoleSize * 0.6) / 2}px`,
+                  left: `${(eyeHoleSize * 0.6) / 6}px`,
+                }"
+              ></div>
+            </div>
+            <div
+              class="gou d2"
+              :style="{
+                width: `${eyeHoleSize / 2}px`,
+                height: `${eyeHoleSize / 2}px`,
+                boxShadow: `inset #000 ${eyeHoleSize / 6}px -${
+                  eyeHoleSize / 50
+                }px 0`,
+              }"
+            >
+              <div
+                :style="{
+                  width: `${(eyeHoleSize * 0.6) / 2}px`,
+                  height: `${(eyeHoleSize * 0.6) / 2}px`,
+                  left: `${(eyeHoleSize * 0.6) / 6}px`,
+                }"
+              ></div>
+            </div>
+            <div
+              class="gou d3"
+              :style="{
+                width: `${eyeHoleSize / 2}px`,
+                height: `${eyeHoleSize / 2}px`,
+                boxShadow: `inset #000 ${eyeHoleSize / 6}px -${
+                  eyeHoleSize / 50
+                }px 0`,
+              }"
+            >
+              <div
+                :style="{
+                  width: `${(eyeHoleSize * 0.6) / 2}px`,
+                  height: `${(eyeHoleSize * 0.6) / 2}px`,
+                  left: `${(eyeHoleSize * 0.6) / 6}px`,
+                }"
+              ></div>
+            </div>
+          </div>
+        </div>
         <div
           :id="`IconHole${iconId}`"
           class="eyeHole"
@@ -192,13 +298,13 @@ const moveBall = (e: any) => {
     // transform: rotate(45deg);
     .eyeLight {
       position: absolute;
-      width: 0px;
+      width: 10px;
       height: 0px;
       z-index: 2;
-      border-radius: 1px;
-      left: 70%;
+      border-radius: 8px;
+      left: 66%;
       top: 32%;
-      transform: translate(-50%, -50%) rotate(60deg);
+      transform: translate(-50%, -50%) rotate(30deg);
     }
     .eyeWhite {
       box-shadow: #000 0 0 0 100vh;
@@ -209,14 +315,75 @@ const moveBall = (e: any) => {
       z-index: 3;
       // transition: 0.05s all;
     }
+    .iconMeat {
+      position: absolute;
+      left: 94%;
+      background: #ff5151;
+      width: 100%;
+      height: 100%;
+      border-radius: 100%;
+      top: 20%;
+      z-index: 2;
+    }
     .ball {
       @include flex();
       position: absolute;
       overflow: hidden;
       z-index: 1;
+      transition: 0.1s all;
+      .gousBox {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: 3;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        .gous {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          .gou {
+            border-radius: 100%;
+            position: absolute;
+            box-shadow: inset #000 5px -2px 0;
+            overflow: hidden;
+            div {
+              position: absolute;
+              background-color: #000;
+              border-radius: 100%;
+            }
+          }
+          .d1 {
+            left: 28%;
+            top: 28%;
+            transform: translate(-50%, -50%) rotate(140deg);
+          }
+          .d2 {
+            right: 12%;
+            top: 28%;
+            transform: translate(-50%, -50%) rotate(200deg);
+          }
+          .d3 {
+            left: 50%;
+            bottom: 6%;
+            transform: translate(-50%, -50%) rotate(0);
+          }
+        }
+      }
+      .iconLine {
+        position: absolute;
+        width: 1px;
+        background: linear-gradient(#00000000, #000000, #00000000);
+        opacity: 0.3;
+        transform-origin: 0% 180%;
+      }
       .eyeHole {
         background-color: #000;
         border-radius: 100%;
+        transition: 0.1s all;
       }
     }
   }
