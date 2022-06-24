@@ -6,7 +6,7 @@ const props = defineProps({
   size: { type: Number, default: 140 },
   color: { type: String, default: "red" },
   shadow: { type: Boolean, default: true },
-  xielun: { type: Boolean, default: true },
+  xielun: { type: Boolean, default: false },
   realEye: { type: Boolean, default: false },
 });
 const iconId = Lodash.uniqueId();
@@ -44,7 +44,7 @@ onMounted(() => {
     eyeWhite.style.borderBottomRightRadius = `${eyeSize}px`;
     eyeLight.style.boxShadow = `${eyeSize / 20}px ${eyeSize / 20}px ${
       eyeSize / 7
-    }px ${eyeSize / 10}px #f0f0f0`;
+    }px ${eyeSize / 10}px #f0f0f080`;
   }
   let eyeHole = document.getElementById(`EyeHole${iconId}`);
   if (eyeHole) {
@@ -60,9 +60,18 @@ onMounted(() => {
     ball.style.width = `${eyeBallSize}px`;
     ball.style.height = `${eyeBallSize}px`;
     ball.style.borderRadius = `${eyeBallSize}px`;
+    ball.style.boxShadow = `rgba(0,0,0,0.15) 0px 0px ${eyeSize / 10}px ${
+      eyeSize / 25
+    }px`;
     if (props.realEye) {
       ball.style.transition = " 0.1s all";
     }
+  }
+  let insetBox = document.getElementById(`InsetBox${iconId}`);
+  if (insetBox) {
+    insetBox.style.boxShadow = `inset rgba(0, 0, 0, 0.6) 0 0 ${
+      eyeSize / 10
+    }px 0px`;
   }
 });
 
@@ -226,8 +235,8 @@ const getRandomLine = () => {
           v-for="(item, index) in eyeBallSize / 2"
           :key="index"
         ></div>
-        <div class="gousBox" v-if="props.xielun">
-          <div class="gous">
+        <div :id="`InsetBox${iconId}`" class="insetBox">
+          <div class="gous" v-if="props.xielun">
             <div
               class="gou d1"
               :style="{
@@ -337,7 +346,7 @@ const getRandomLine = () => {
       overflow: hidden;
       z-index: 1;
       // transition: 0.1s all;
-      .gousBox {
+      .insetBox {
         width: 100%;
         height: 100%;
         position: absolute;
@@ -345,6 +354,7 @@ const getRandomLine = () => {
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+        border-radius: 100%;
         .gous {
           position: relative;
           width: 100%;
