@@ -5,8 +5,9 @@ import { onBeforeUnmount, onMounted, ref } from "vue-demi";
 const props = defineProps({
   size: { type: Number, default: 140 },
   color: { type: String, default: "red" },
-  shadow: { type: Boolean, default: false },
+  shadow: { type: Boolean, default: true },
   xielun: { type: Boolean, default: true },
+  realEye: { type: Boolean, default: false },
 });
 const iconId = Lodash.uniqueId();
 const eyeSize = props.size;
@@ -50,12 +51,18 @@ onMounted(() => {
     eyeHole.style.width = `${eyeHoleSize}px`;
     eyeHole.style.height = `${eyeHoleSize}px`;
     eyeHole.style.borderRadius = `${eyeHoleSize}px`;
+    if (props.realEye) {
+      eyeHole.style.transition = " 0.1s all";
+    }
   }
   let ball = document.getElementById(`EyeBall${iconId}`);
   if (ball) {
     ball.style.width = `${eyeBallSize}px`;
     ball.style.height = `${eyeBallSize}px`;
     ball.style.borderRadius = `${eyeBallSize}px`;
+    if (props.realEye) {
+      ball.style.transition = " 0.1s all";
+    }
   }
 });
 
@@ -140,7 +147,7 @@ const moveBall = (e: any) => {
     ...upTrans,
   };
 
-  if (props.shadow) {
+  if (props.shadow && !props.realEye) {
     let ball = document.getElementById(`EyeBall${iconId}`);
     let hole = document.getElementById(`EyeHole${iconId}`);
     let shadowLightSize = minEyeHoleSize / 3;
@@ -329,7 +336,7 @@ const getRandomLine = () => {
       position: absolute;
       overflow: hidden;
       z-index: 1;
-      transition: 0.1s all;
+      // transition: 0.1s all;
       .gousBox {
         width: 100%;
         height: 100%;
@@ -382,7 +389,7 @@ const getRandomLine = () => {
       .eyeHole {
         background-color: #000;
         border-radius: 100%;
-        transition: 0.1s all;
+        // transition: 0.1s all;
         box-shadow: #000 0 0 13px 2px;
       }
     }
