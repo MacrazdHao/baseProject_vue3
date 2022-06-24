@@ -24,7 +24,7 @@ const login = () => {
   <div class="Login">
     <div class="loginBox">
       <!-- <img class="logo" src="@/assets/logo.svg" /> -->
-      <icon2 :size="200" />
+      <icon2 :size="140" />
       <div class="form">
         <div class="form-item">
           <input class="form-item-input" placeholder="请输入帐号" />

@@ -326,7 +326,9 @@ const getRandomLine = () => {
       z-index: 2;
     }
     .ball {
-      @include flex();
+      display: flex;
+      justify-content: center;
+      align-items: center;
       position: absolute;
       overflow: hidden;
       z-index: 1;
@@ -384,6 +386,7 @@ const getRandomLine = () => {
         background-color: #000;
         border-radius: 100%;
         transition: 0.1s all;
+        box-shadow: #000 0 0 13px 2px;
       }
     }
   }
