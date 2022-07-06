@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import icon2 from "@/components/icon2.vue";
-import { onMounted, ref, watch, watchEffect } from "vue";
+import fixedMenu from "@/components/common/fixedMenu.vue";
+import { FixedMenuOptionsItemType } from "@/components/common/componentsPropTypes";
+import { onMounted, reactive, ref, watch, watchEffect } from "vue";
 import { storeToRefs } from "pinia";
 import modules from "@/store/index";
 import { RouteRecordRaw, useRoute, useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import Lodash from "lodash";
-const { t, locale } = useI18n();
+const { t, locale, availableLocales } = useI18n();
 const route = useRoute();
 const router = useRouter();
 const menus =
@@ -14,6 +16,13 @@ const menus =
 const showingParent = ref<Array<string>>([]);
 const curRouteName = ref<string>("");
 const childrenStyle = ref<any>({});
+
+const langMenuState = reactive({
+  show: false,
+  options: availableLocales.map((item) => {
+    return <FixedMenuOptionsItemType>{ text: t(`global.${item}`), value: item };
+  }),
+});
 
 const childrenShowStyle = (toggle: boolean, length: number) => {
   if (length < 0) return {};
@@ -70,6 +79,10 @@ const jumpTo = (to: RouteRecordRaw | undefined, fromPath: boolean = false) => {
     return;
   }
   router.push({ name: to.name == "Index" ? "Dashboard" : to.name });
+};
+
+const showLangMenu = () => {
+  langMenuShow.value = !langMenuShow.value;
 };
 </script>
 
@@ -186,7 +199,14 @@ const jumpTo = (to: RouteRecordRaw | undefined, fromPath: boolean = false) => {
               <p class="nickname">昵称昵称昵称昵称昵称昵称昵称昵称昵称昵称</p>
             </div>
             <div class="langMenu">
-              <p class="langText">{{ t(`global.${locale}`) }}</p>
+              <fixedMenu
+                :options="langMenuState.options"
+                :show="langMenuState.show"
+              >
+                <p class="langText" @click="showLangMenu">
+                  {{ t(`global.${locale}`) }}
+                </p>
+              </fixedMenu>
             </div>
           </div>
         </div>

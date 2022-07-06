@@ -448,14 +448,13 @@ const getRandomLine = () => {
       .eyeLine {
         position: absolute;
         width: 1px;
-        background: linear-gradient(#00000000, #000000, #00000000);
+        background: linear-gradient(#00000000, #0000006b, #00000000);
         opacity: 0.3;
         transform-origin: 0% 180%;
       }
       .eyeHole {
         background-color: #000;
         border-radius: 100%;
-        // transition: 0.1s all;
         box-shadow: #000 0 0 13px 2px;
       }
     }
